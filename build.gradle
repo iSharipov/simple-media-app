@@ -25,3 +25,18 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext.versions = [ANDROID_SUPPORT  : "27.1.1",
+                CONSTRAINT_LAYOUT: "1.1.1",
+                ESPRESSO         : "2.2.2",
+                RETROFIT         : "2.3.0",
+                OK_HTTP          : "3.10.0",
+                BUTTERKNIFE      : "8.8.1",
+                TIMBER           : "4.7.0",
+                RX_JAVA          : "2.1.14",
+                RX_ANDROID       : "2.0.2",
+                DAGGER           : "2.16",
+                LEAK_CANARY      : "1.5.4",
+                GLIDE            : "4.7.1",
+                STETHO           :  "1.5.0"
+]
