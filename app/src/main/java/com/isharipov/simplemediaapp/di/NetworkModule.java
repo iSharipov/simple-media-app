@@ -6,6 +6,8 @@ import com.isharipov.simplemediaapp.rx.AppRxSchedulers;
 
 import java.io.File;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -20,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
+    @Singleton
     @Provides
     OkHttpClient provideHttpClient(HttpLoggingInterceptor logger, Cache cache) {
         return new OkHttpClient().newBuilder()
@@ -28,6 +31,7 @@ public class NetworkModule {
                 .build();
     }
 
+    @Singleton
     @Provides
     HttpLoggingInterceptor provideInterceptor() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -35,6 +39,7 @@ public class NetworkModule {
         return httpLoggingInterceptor;
     }
 
+    @Singleton
     @Provides
     Cache provideCache(File file) {
         return new Cache(file, 10 * 10 * 1000);
@@ -45,11 +50,13 @@ public class NetworkModule {
         return context.getFilesDir();
     }
 
+    @Singleton
     @Provides
     RxJava2CallAdapterFactory provideRxAdapter() {
         return RxJava2CallAdapterFactory.createWithScheduler(AppRxSchedulers.INTERNET_SCHEDULERS);
     }
 
+    @Singleton
     @Provides
     GsonConverterFactory provideGsonClient() {
         return GsonConverterFactory.create();
