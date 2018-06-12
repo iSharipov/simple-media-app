@@ -18,6 +18,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AppContextModule.class,
+        ActivityBindingModule.class,
         NetworkModule.class,
         AndroidSupportInjectionModule.class
 })
