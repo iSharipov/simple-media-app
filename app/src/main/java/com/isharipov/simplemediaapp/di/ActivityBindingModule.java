@@ -4,13 +4,7 @@ import com.isharipov.simplemediaapp.MainActivity;
 import com.isharipov.simplemediaapp.news.ui.NewsContract;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsPresenter;
-import com.isharipov.simplemediaapp.news.ui.category.BusinessFragment;
-import com.isharipov.simplemediaapp.news.ui.category.EntertainmentFragment;
-import com.isharipov.simplemediaapp.news.ui.category.GeneralFragment;
-import com.isharipov.simplemediaapp.news.ui.category.HealthFragment;
-import com.isharipov.simplemediaapp.news.ui.category.ScienceFragment;
-import com.isharipov.simplemediaapp.news.ui.category.SportsFragment;
-import com.isharipov.simplemediaapp.news.ui.category.TechnologyFragment;
+import com.isharipov.simplemediaapp.news.ui.category.CategoryFragment;
 
 import dagger.Binds;
 import dagger.Module;
@@ -26,25 +20,7 @@ public abstract class ActivityBindingModule {
     abstract NewsFragment newsFragment();
 
     @ContributesAndroidInjector
-    abstract BusinessFragment businessFragment();
-
-    @ContributesAndroidInjector
-    abstract EntertainmentFragment entertainmentFragment();
-
-    @ContributesAndroidInjector
-    abstract GeneralFragment generalFragment();
-
-    @ContributesAndroidInjector
-    abstract HealthFragment healthFragment();
-
-    @ContributesAndroidInjector
-    abstract ScienceFragment scienceFragment();
-
-    @ContributesAndroidInjector
-    abstract SportsFragment sportsFragment();
-
-    @ContributesAndroidInjector
-    abstract TechnologyFragment technologyFragment();
+    abstract CategoryFragment categoryFragment();
 
     @Binds
     abstract NewsContract.Presenter newsPresenter(NewsPresenter presenter);

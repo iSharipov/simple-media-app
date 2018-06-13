@@ -5,12 +5,13 @@ import android.os.Bundle;
 import dagger.android.support.DaggerFragment;
 
 /**
- * 12.06.2018.
+ * 13.06.2018.
  */
-public class HealthFragment extends DaggerFragment {
-    public static HealthFragment newInstance() {
+public class CategoryFragment extends DaggerFragment {
+
+    public static CategoryFragment newInstance(String categoryParam) {
         Bundle args = new Bundle();
-        HealthFragment fragment = new HealthFragment();
+        CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(args);
         return fragment;
     }
