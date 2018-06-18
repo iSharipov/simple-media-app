@@ -1,9 +1,9 @@
 package com.isharipov.simplemediaapp.di;
 
 import com.isharipov.simplemediaapp.MainActivity;
-import com.isharipov.simplemediaapp.news.ui.NewsContract;
+import com.isharipov.simplemediaapp.news.ui.category.CategoryContract;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
-import com.isharipov.simplemediaapp.news.ui.NewsPresenter;
+import com.isharipov.simplemediaapp.news.ui.category.CategoryPresenter;
 import com.isharipov.simplemediaapp.news.ui.category.CategoryFragment;
 
 import dagger.Binds;
@@ -23,5 +23,5 @@ public abstract class ActivityBindingModule {
     abstract CategoryFragment categoryFragment();
 
     @Binds
-    abstract NewsContract.Presenter newsPresenter(NewsPresenter presenter);
+    abstract CategoryContract.Presenter newsPresenter(CategoryPresenter presenter);
 }

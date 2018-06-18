@@ -10,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
-import com.isharipov.simplemediaapp.news.ui.category.Category;
-import com.isharipov.simplemediaapp.news.ui.category.CategoryFragment;
-import com.isharipov.simplemediaapp.news.ui.category.TabsPagerAdapter;
 
 import javax.inject.Inject;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
@@ -23,12 +21,14 @@ import dagger.android.support.DaggerFragment;
 /**
  * 12.06.2018.
  */
-public class NewsFragment extends DaggerFragment implements NewsContract.View {
+public class NewsFragment extends DaggerFragment {
 
     @BindView(R.id.news_category_tabs)
     TabLayout tabLayout;
     @BindView(R.id.news_view_pager)
     ViewPager viewPager;
+    @BindArray(R.array.category_tab_label)
+    String[] categoryTabLabel;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,9 +36,6 @@ public class NewsFragment extends DaggerFragment implements NewsContract.View {
         fragment.setArguments(args);
         return fragment;
     }
-
-    @Inject
-    NewsContract.Presenter presenter;
 
     @Inject
     public NewsFragment() {
@@ -76,24 +73,8 @@ public class NewsFragment extends DaggerFragment implements NewsContract.View {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.attachView(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        presenter.detachView();
-    }
-
     private void initTabPagerAdapter() {
-        TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager());
-        for (Category category : Category.values()) {
-            tabsPagerAdapter.addFragment(CategoryFragment.newInstance(category.getCategoryParam()), category.getPageTitle());
-        }
-        viewPager.setAdapter(tabsPagerAdapter);
+        viewPager.setAdapter(new TabsPagerAdapter(getChildFragmentManager(), categoryTabLabel));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

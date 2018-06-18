@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 27
@@ -17,6 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField "String", "NEWS_API_KEY", NEWS_API_KEY
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -32,6 +34,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$versions.CONSTRAINT_LAYOUT"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.LEAK_CANARY"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android:$versions.LEAK_CANARY"
 
     implementation("com.github.bumptech.glide:glide:$versions.GLIDE") {
         exclude group: "com.android.support"
@@ -65,7 +68,11 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$versions.STETHO"
     implementation "com.facebook.stetho:stetho-okhttp3:$versions.STETHO"
 
-    implementation 'com.annimon:stream:1.2.0'
+    implementation "android.arch.persistence.room:runtime:$versions.ROOM"
+    implementation "android.arch.persistence.room:rxjava2:$versions.ROOM"
+    annotationProcessor "android.arch.persistence.room:compiler:$versions.ROOM"
+
+    androidTestImplementation "com.android.support:support-annotations:$versions.ANDROID_SUPPORT"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

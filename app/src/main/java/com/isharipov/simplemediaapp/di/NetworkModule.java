@@ -2,6 +2,7 @@ package com.isharipov.simplemediaapp.di;
 
 import android.content.Context;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.isharipov.simplemediaapp.rx.AppRxSchedulers;
 
 import java.io.File;
@@ -27,6 +28,7 @@ public class NetworkModule {
     OkHttpClient provideHttpClient(HttpLoggingInterceptor logger, Cache cache) {
         return new OkHttpClient().newBuilder()
                 .addInterceptor(logger)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .cache(cache)
                 .build();
     }
