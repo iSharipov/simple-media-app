@@ -24,8 +24,8 @@ import timber.log.Timber;
  */
 public class ArticleRepositoryImpl implements ArticleRepository {
 
-    private ArticleApi articleApi;
-    private ArticleDao articleDao;
+    private final ArticleApi articleApi;
+    private final ArticleDao articleDao;
 
     @Inject
     public ArticleRepositoryImpl(ArticleApi articleApi, ArticleDao articleDao) {
@@ -33,34 +33,18 @@ public class ArticleRepositoryImpl implements ArticleRepository {
         this.articleDao = articleDao;
     }
 
-    public Observable<ArticleResponse> getArticleResponse(QueryParam queryParam) {
-        return Observable.concatArray(
-                getArticleFromDb(queryParam),
-                getArticlesFromApi(queryParam))
-                .materialize()
-                .filter(it -> !it.isOnError())
-                .dematerialize();
-    }
-
-    private Observable<ArticleResponse> getArticlesFromApi(QueryParam param) {
+    public Observable<ArticleResponse> getArticlesFromApi(QueryParam param) {
         return articleApi
-                .getArticles(
-                        param.getCountry(),
+                .getArticles(param.getCountry(),
                         param.getCategory(),
                         param.getQuery(),
                         param.getPage(),
-                        BuildConfig.NEWS_API_KEY)
-                .doOnNext(it -> {
-                    List<Article> articles = it.getArticles();
-                    for (Article article : articles) {
-                        article.setCategory(param.getCategory());
-                    }
-                    storeArticlesInDb(articles);
-                });
+                        BuildConfig.NEWS_API_KEY,
+                        "10");
 
     }
 
-    private Observable<ArticleResponse> getArticleFromDb(QueryParam param) {
+    public Observable<ArticleResponse> getArticlesFromDb(QueryParam param) {
         return articleDao.getArticles(param.getCategory())
                 .filter(articles -> !articles.isEmpty())
                 .map(articles -> {
@@ -70,7 +54,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
                 }).toObservable();
     }
 
-    private void storeArticlesInDb(List<Article> articles) {
+    public void storeArticlesInDb(List<Article> articles) {
         Completable.fromAction(() -> articleDao.insertAll(articles))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io()).subscribe(new CompletableObserver() {
@@ -81,7 +65,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
             @Override
             public void onComplete() {
-                Timber.d("Inserted users from API in DB...");
+                Timber.d("Inserted users from API to DB...");
             }
 
             @Override

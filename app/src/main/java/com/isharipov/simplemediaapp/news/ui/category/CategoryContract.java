@@ -16,10 +16,14 @@ public interface CategoryContract {
         void setData(List<Article> articles);
 
         void showContent();
+
+        void onItemsLoadComplete();
+
+        void setMoreLoaded(boolean moreLoaded);
     }
 
     interface Presenter extends BasePresenter<CategoryContract.View> {
 
-        void loadArticles(QueryParam queryParam);
+        void loadArticlesFromApi(QueryParam queryParam);
     }
 }

@@ -18,5 +18,6 @@ public interface ArticleApi {
                                             @Query("category") @Nullable String category,
                                             @Query("q") @Nullable String query,
                                             @Query("page") @NonNull Integer page,
-                                            @Query("apiKey") @NonNull String apiKey);
+                                            @Query("apiKey") @NonNull String apiKey,
+                                            @Query("pageSize") @NonNull String pageSize);
 }

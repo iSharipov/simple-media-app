@@ -2,7 +2,6 @@ package com.isharipov.simplemediaapp.news.repository.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.isharipov.simplemediaapp.news.model.Article;
@@ -19,6 +18,6 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles WHERE category=:category")
     Single<List<Article>> getArticles(String category);
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert
     void insertAll(List<Article> articles);
 }

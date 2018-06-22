@@ -1,13 +1,15 @@
 package com.isharipov.simplemediaapp.news.ui.category;
 
+import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 import com.isharipov.simplemediaapp.news.repository.ArticleRepository;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -39,33 +41,36 @@ public class CategoryPresenter implements CategoryContract.Presenter {
 
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
-    public void loadArticles(QueryParam queryParam) {
-        articleRepository.getArticleResponse(queryParam)
-                .debounce(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
+    public void loadArticlesFromApi(QueryParam queryParam) {
+        Observable<ArticleResponse> articlesFromApi = articleRepository.getArticlesFromApi(queryParam);
+        articlesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new Observer<ArticleResponse>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                                System.out.println(d);
-                            }
+                .subscribe(new Observer<ArticleResponse>() {
 
-                            @Override
-                            public void onNext(ArticleResponse articleResponse) {
-                                view.setData(articleResponse.getArticles());
-                            }
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                            @Override
-                            public void onError(Throwable e) {
-                                System.out.println(e);
-                            }
+                    }
 
-                            @Override
-                            public void onComplete() {
-                                System.out.println("blabla");
-                            }
+                    @Override
+                    public void onNext(ArticleResponse articleResponse) {
+                        List<Article> articles = articleResponse.getArticles();
+                        view.setData(articles);
+                        for (Article article : articles) {
+                            article.setCategory(queryParam.getCategory());
                         }
-                );
+                        articleRepository.storeArticlesInDb(articles);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.onItemsLoadComplete();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        view.onItemsLoadComplete();
+                    }
+                });
     }
 }

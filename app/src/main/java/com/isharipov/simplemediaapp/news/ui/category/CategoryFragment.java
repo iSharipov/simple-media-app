@@ -3,6 +3,7 @@ package com.isharipov.simplemediaapp.news.ui.category;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +27,7 @@ import dagger.android.support.DaggerFragment;
 /**
  * 13.06.2018.
  */
-public class CategoryFragment extends DaggerFragment implements CategoryContract.View {
+public class CategoryFragment extends DaggerFragment implements CategoryContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String POSITION = "POSITION";
     private static final String PAGE = "PAGE";
@@ -38,6 +39,8 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     CategoryContract.Presenter presenter;
     @BindView(R.id.category_recycler_layout)
     RecyclerView categoryRecyclerLayout;
+    @BindView(R.id.category_refresh_layout)
+    SwipeRefreshLayout categoryRefreshLayout;
     @BindArray(R.array.category_query_param)
     String[] categoryQueryParam;
 
@@ -66,6 +69,9 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
             page = savedInstanceState.getInt(PAGE);
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
+        categoryAdapter.setOnLoadMoreListener(() -> {
+            presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], ++page));
+        });
     }
 
     @Nullable
@@ -80,13 +86,14 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     private void setupUI() {
         categoryRecyclerLayout.setLayoutManager(new GridLayoutManager(getContext(), 1));
         categoryRecyclerLayout.setAdapter(categoryAdapter);
+        categoryRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
-        presenter.loadArticles(new QueryParam("ru", categoryQueryParam[position], 1));
+        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
     }
 
     @Override
@@ -104,11 +111,28 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
     @Override
     public void setData(List<Article> articles) {
-        categoryAdapter.replaceData(articles);
+        categoryAdapter.appendData(articles);
     }
 
     @Override
     public void showContent() {
-        presenter.loadArticles(new QueryParam("ru", categoryQueryParam[position], 1));
+        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        categoryAdapter.clearArticles();
+        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
+    }
+
+    @Override
+    public void onItemsLoadComplete() {
+        categoryRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setMoreLoaded(boolean moreLoaded) {
+        categoryAdapter.setLoaded(false);
     }
 }
