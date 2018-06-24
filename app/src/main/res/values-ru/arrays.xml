@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="category_tab_label">
+    <string-array name="tab_label">
+        <item>Всё</item>
         <item>Бизнес</item>
         <item>Развлечения</item>
         <item>Главное</item>
@@ -10,7 +11,8 @@
         <item>Технологии</item>
     </string-array>
 
-    <string-array name="category_query_param">
+    <string-array name="query_param">
+        <item>everything</item>
         <item>business</item>
         <item>entertainment</item>
         <item>general</item>

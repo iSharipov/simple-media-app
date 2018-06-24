@@ -1,7 +1,8 @@
-package com.isharipov.simplemediaapp.news.ui.category;
+package com.isharipov.simplemediaapp.news.ui.news.category;
 
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
+import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 import com.isharipov.simplemediaapp.news.repository.ArticleRepository;
 
@@ -42,7 +43,8 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
-        Observable<ArticleResponse> articlesFromApi = articleRepository.getArticlesFromApi(queryParam);
+        QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
+        Observable<ArticleResponse> articlesFromApi = articleRepository.getArticlesByCategoryFromApi(queryCategoryParam);
         articlesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArticleResponse>() {
@@ -57,7 +59,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
                         for (Article article : articles) {
-                            article.setCategory(queryParam.getCategory());
+                            article.setCategory(queryCategoryParam.getCategory());
                         }
                         articleRepository.storeArticlesInDb(articles);
                     }

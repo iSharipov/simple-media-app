@@ -27,7 +27,7 @@ public class NewsFragment extends DaggerFragment {
     TabLayout tabLayout;
     @BindView(R.id.news_view_pager)
     ViewPager viewPager;
-    @BindArray(R.array.category_tab_label)
+    @BindArray(R.array.tab_label)
     String[] categoryTabLabel;
 
     public static NewsFragment newInstance() {

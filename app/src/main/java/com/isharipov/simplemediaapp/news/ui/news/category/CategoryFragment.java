@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.ui.category;
+package com.isharipov.simplemediaapp.news.ui.news.category;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
-import com.isharipov.simplemediaapp.news.model.QueryParam;
+import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     RecyclerView categoryRecyclerLayout;
     @BindView(R.id.category_refresh_layout)
     SwipeRefreshLayout categoryRefreshLayout;
-    @BindArray(R.array.category_query_param)
+    @BindArray(R.array.query_param)
     String[] categoryQueryParam;
 
     @Inject
@@ -70,7 +70,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
         categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], ++page));
+            presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], ++page));
         });
     }
 
@@ -93,7 +93,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
-        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
     }
 
     @Override
@@ -116,14 +116,14 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
     @Override
     public void showContent() {
-        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
     }
 
     @Override
     public void onRefresh() {
         page = 1;
         categoryAdapter.clearArticles();
-        presenter.loadArticlesFromApi(new QueryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
     }
 
     @Override

@@ -14,10 +14,16 @@ import retrofit2.http.Query;
  */
 public interface ArticleApi {
     @GET("/v2/top-headlines")
-    Observable<ArticleResponse> getArticles(@Query("country") @Nullable String country,
-                                            @Query("category") @Nullable String category,
-                                            @Query("q") @Nullable String query,
-                                            @Query("page") @NonNull Integer page,
-                                            @Query("apiKey") @NonNull String apiKey,
-                                            @Query("pageSize") @NonNull String pageSize);
+    Observable<ArticleResponse> getArticlesByCategory(@Query("country") @Nullable String country,
+                                                      @Query("category") @Nullable String category,
+                                                      @Query("q") @Nullable String query,
+                                                      @Query("page") @NonNull Integer page,
+                                                      @Query("apiKey") @NonNull String apiKey,
+                                                      @Query("pageSize") @NonNull Integer pageSize);
+
+    @GET("/v2/everything")
+    Observable<ArticleResponse> getEverythingArticles(@Query("q") @Nullable String query,
+                                                      @Query("page") @NonNull Integer page,
+                                                      @Query("apiKey") @NonNull String apiKey,
+                                                      @Query("pageSize") @NonNull Integer pageSize);
 }

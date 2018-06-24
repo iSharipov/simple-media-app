@@ -3,7 +3,8 @@ package com.isharipov.simplemediaapp.news.repository;
 import com.isharipov.simplemediaapp.BuildConfig;
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
-import com.isharipov.simplemediaapp.news.model.QueryParam;
+import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
+import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
 import com.isharipov.simplemediaapp.news.repository.api.ArticleApi;
 import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
 
@@ -33,19 +34,40 @@ public class ArticleRepositoryImpl implements ArticleRepository {
         this.articleDao = articleDao;
     }
 
-    public Observable<ArticleResponse> getArticlesFromApi(QueryParam param) {
+    public Observable<ArticleResponse> getArticlesByCategoryFromApi(QueryCategoryParam param) {
         return articleApi
-                .getArticles(param.getCountry(),
+                .getArticlesByCategory(
+                        param.getCountry(),
                         param.getCategory(),
                         param.getQuery(),
                         param.getPage(),
                         BuildConfig.NEWS_API_KEY,
-                        "10");
+                        param.getPageSize());
 
     }
 
-    public Observable<ArticleResponse> getArticlesFromDb(QueryParam param) {
-        return articleDao.getArticles(param.getCategory())
+    @Override
+    public Observable<ArticleResponse> getArticlesEverythingFromApi(QueryEverythingParam param) {
+        return articleApi.getEverythingArticles(
+                param.getQuery(),
+                param.getPage(),
+                BuildConfig.NEWS_API_KEY,
+                param.getPageSize());
+    }
+
+    public Observable<ArticleResponse> getArticlesByCategoryFromDb(QueryCategoryParam param) {
+        return articleDao.getArticlesByCategory(param.getCategory())
+                .filter(articles -> !articles.isEmpty())
+                .map(articles -> {
+                    ArticleResponse articleResponse = new ArticleResponse();
+                    articleResponse.setArticles(articles);
+                    return articleResponse;
+                }).toObservable();
+    }
+
+    @Override
+    public Observable<ArticleResponse> getArticlesEverythingFromDb() {
+        return articleDao.getArticlesWhereNoCategory()
                 .filter(articles -> !articles.isEmpty())
                 .map(articles -> {
                     ArticleResponse articleResponse = new ArticleResponse();

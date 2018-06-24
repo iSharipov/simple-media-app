@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.ui.category;
+package com.isharipov.simplemediaapp.news.ui.news.category;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;

@@ -16,7 +16,10 @@ import io.reactivex.Single;
 @Dao
 public interface ArticleDao {
     @Query("SELECT * FROM articles WHERE category=:category")
-    Single<List<Article>> getArticles(String category);
+    Single<List<Article>> getArticlesByCategory(String category);
+
+    @Query("SELECT * FROM articles WHERE category IS NULL OR category = ''")
+    Single<List<Article>> getArticlesWhereNoCategory();
 
     @Insert
     void insertAll(List<Article> articles);

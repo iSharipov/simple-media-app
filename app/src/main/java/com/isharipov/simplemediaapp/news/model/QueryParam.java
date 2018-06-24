@@ -6,34 +6,31 @@ import android.support.annotation.NonNull;
  * 13.06.2018.
  */
 public class QueryParam {
-    private final String country;
-    private final String category;
-    private String query;
     private final Integer page;
+    private String query;
+    private Integer pageSize;
 
-    public QueryParam(@NonNull String country, @NonNull String category, @NonNull Integer page) {
-        this.country = country;
-        this.category = category;
+    public QueryParam(@NonNull Integer page) {
         this.page = page;
     }
 
-    public void withQuery(@NonNull String query) {
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setQuery(@NonNull String query) {
         this.query = query;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public String getQuery() {
         return query;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

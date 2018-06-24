@@ -7,7 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.isharipov.simplemediaapp.news.ui.category.CategoryFragment;
+import com.isharipov.simplemediaapp.news.ui.news.category.CategoryFragment;
+import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 
 /**
  * 12.06.2018.
@@ -29,6 +30,9 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (position == 0) {
+            return EverythingFragment.newInstance(position);
+        }
         return CategoryFragment.newInstance(position);
     }
 
