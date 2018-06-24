@@ -5,7 +5,9 @@ import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
-import com.isharipov.simplemediaapp.news.repository.api.ArticleApi;
+import com.isharipov.simplemediaapp.news.model.source.QuerySourceParam;
+import com.isharipov.simplemediaapp.news.model.source.SourceResponse;
+import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
 import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
 
 import java.util.List;
@@ -23,19 +25,19 @@ import timber.log.Timber;
 /**
  * 13.06.2018.
  */
-public class ArticleRepositoryImpl implements ArticleRepository {
+public class NewsRepositoryImpl implements NewsRepository {
 
-    private final ArticleApi articleApi;
+    private final NewsApi newsApi;
     private final ArticleDao articleDao;
 
     @Inject
-    public ArticleRepositoryImpl(ArticleApi articleApi, ArticleDao articleDao) {
-        this.articleApi = articleApi;
+    public NewsRepositoryImpl(NewsApi newsApi, ArticleDao articleDao) {
+        this.newsApi = newsApi;
         this.articleDao = articleDao;
     }
 
     public Observable<ArticleResponse> getArticlesByCategoryFromApi(QueryCategoryParam param) {
-        return articleApi
+        return newsApi
                 .getArticlesByCategory(
                         param.getCountry(),
                         param.getCategory(),
@@ -48,7 +50,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public Observable<ArticleResponse> getArticlesEverythingFromApi(QueryEverythingParam param) {
-        return articleApi.getEverythingArticles(
+        return newsApi.getEverythingArticles(
                 param.getQuery(),
                 param.getPage(),
                 BuildConfig.NEWS_API_KEY,
@@ -87,7 +89,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
             @Override
             public void onComplete() {
-                Timber.d("Inserted users from API to DB...");
+                Timber.d("Inserted articles from API to DB...");
             }
 
             @Override
@@ -95,5 +97,13 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
             }
         });
+    }
+
+    @Override
+    public Observable<SourceResponse> getSourcesFromApi(QuerySourceParam param) {
+        return newsApi.getSources(
+                param.getQuery(),
+                param.getCountry(),
+                BuildConfig.NEWS_API_KEY);
     }
 }

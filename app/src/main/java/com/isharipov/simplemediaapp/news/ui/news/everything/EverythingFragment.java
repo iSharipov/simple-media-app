@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
+import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryAdapter;
 

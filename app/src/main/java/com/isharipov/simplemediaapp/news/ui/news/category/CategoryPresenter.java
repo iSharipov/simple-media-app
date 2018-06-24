@@ -4,7 +4,7 @@ import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
-import com.isharipov.simplemediaapp.news.repository.ArticleRepository;
+import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import io.reactivex.schedulers.Schedulers;
 public class CategoryPresenter implements CategoryContract.Presenter {
 
     private CategoryContract.View view;
-    private ArticleRepository articleRepository;
+    private NewsRepository newsRepository;
 
     @Inject
-    CategoryPresenter(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    CategoryPresenter(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
         QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
-        Observable<ArticleResponse> articlesFromApi = articleRepository.getArticlesByCategoryFromApi(queryCategoryParam);
+        Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesByCategoryFromApi(queryCategoryParam);
         articlesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArticleResponse>() {
@@ -61,7 +61,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                         for (Article article : articles) {
                             article.setCategory(queryCategoryParam.getCategory());
                         }
-                        articleRepository.storeArticlesInDb(articles);
+                        newsRepository.storeArticlesInDb(articles);
                     }
 
                     @Override

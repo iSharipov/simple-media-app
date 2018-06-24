@@ -3,9 +3,9 @@ package com.isharipov.simplemediaapp.news.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.isharipov.simplemediaapp.news.repository.ArticleRepository;
-import com.isharipov.simplemediaapp.news.repository.ArticleRepositoryImpl;
-import com.isharipov.simplemediaapp.news.repository.api.ArticleApi;
+import com.isharipov.simplemediaapp.news.repository.NewsRepository;
+import com.isharipov.simplemediaapp.news.repository.NewsRepositoryImpl;
+import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
 import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
 
@@ -34,7 +34,7 @@ public class ArticleDbModule {
 
     @Singleton
     @Provides
-    ArticleRepository productRepository(ArticleApi articleApi, ArticleDao articleDao) {
-        return new ArticleRepositoryImpl(articleApi, articleDao);
+    NewsRepository productRepository(NewsApi newsApi, ArticleDao articleDao) {
+        return new NewsRepositoryImpl(newsApi, articleDao);
     }
 }

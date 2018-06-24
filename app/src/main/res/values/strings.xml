@@ -3,4 +3,5 @@
     <string name="title_music">Music</string>
     <string name="title_news">News</string>
     <string name="title_movies">Movies</string>
+    <string name="media_source_img">media source image</string>
 </resources>

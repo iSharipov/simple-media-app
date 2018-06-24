@@ -4,7 +4,7 @@ import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
-import com.isharipov.simplemediaapp.news.repository.ArticleRepository;
+import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import io.reactivex.schedulers.Schedulers;
 public class EverythingPresenter implements EverythingContract.Presenter {
 
     private EverythingContract.View view;
-    private final ArticleRepository articleRepository;
+    private final NewsRepository newsRepository;
 
     @Inject
-    EverythingPresenter(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    EverythingPresenter(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class EverythingPresenter implements EverythingContract.Presenter {
     @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
         QueryEverythingParam queryEverythingParam = (QueryEverythingParam) queryParam;
-        Observable<ArticleResponse> articlesFromApi = articleRepository.getArticlesEverythingFromApi(queryEverythingParam);
+        Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesEverythingFromApi(queryEverythingParam);
         articlesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArticleResponse>() {
@@ -56,7 +56,7 @@ public class EverythingPresenter implements EverythingContract.Presenter {
                     public void onNext(ArticleResponse articleResponse) {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
-                        articleRepository.storeArticlesInDb(articles);
+                        newsRepository.storeArticlesInDb(articles);
                     }
 
                     @Override
@@ -69,5 +69,10 @@ public class EverythingPresenter implements EverythingContract.Presenter {
                         view.onItemsLoadComplete();
                     }
                 });
+    }
+
+    @Override
+    public void loadSources(QueryParam queryParam) {
+
     }
 }
