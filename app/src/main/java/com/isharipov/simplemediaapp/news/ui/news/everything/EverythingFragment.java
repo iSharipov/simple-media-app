@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
-import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryAdapter;
 
@@ -72,7 +71,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
         categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryEverythingParam(++page));
+            presenter.loadArticlesFromApi(new QueryEverythingParam("ru", ++page));
         });
     }
 
@@ -95,7 +94,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
     public void onResume() {
         super.onResume();
         presenter.attachView(this);
-        presenter.loadArticlesFromApi(new QueryEverythingParam(page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
     }
 
     @Override
@@ -118,14 +117,14 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
 
     @Override
     public void showContent() {
-        presenter.loadArticlesFromApi(new QueryEverythingParam(page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
     }
 
     @Override
     public void onRefresh() {
         page = 1;
         categoryAdapter.clearArticles();
-        presenter.loadArticlesFromApi(new QueryEverythingParam(page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
     }
 
     @Override

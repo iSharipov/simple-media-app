@@ -6,17 +6,14 @@ import android.support.annotation.NonNull;
  * 22.06.2018.
  */
 public class QueryEverythingParam extends QueryParam {
-    private String country;
+    private final String country;
 
-    public QueryEverythingParam(@NonNull Integer page) {
+    public QueryEverythingParam(@NonNull String country, @NonNull Integer page) {
         super(page);
+        this.country = country;
     }
 
     public String getCountry() {
         return country;
-    }
-
-    public void setCountry(@NonNull String country) {
-        this.country = country;
     }
 }

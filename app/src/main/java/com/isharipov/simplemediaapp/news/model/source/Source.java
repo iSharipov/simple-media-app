@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.Objects;
                 value = {"id", "name", "description", "url", "category", "language", "country"},
                 unique = true))
 public class Source implements Serializable {
+    @NonNull
     @PrimaryKey
     private String id;
     @ColumnInfo(name = "name")
