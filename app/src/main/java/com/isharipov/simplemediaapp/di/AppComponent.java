@@ -9,7 +9,7 @@ import com.isharipov.simplemediaapp.news.di.FaviconFinderApiModule;
 import com.isharipov.simplemediaapp.news.di.NewsApiModule;
 import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
-import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
+import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
 
 import javax.inject.Singleton;
 
@@ -35,7 +35,7 @@ public interface AppComponent extends AndroidInjector<MediaApp> {
 
     void inject(GlideConfiguration glideConfiguration);
 
-    ArticleDao articleDao();
+    NewsDao articleDao();
 
     AppDatabase appDatabase();
 

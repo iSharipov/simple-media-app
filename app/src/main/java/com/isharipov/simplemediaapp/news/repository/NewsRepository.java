@@ -4,8 +4,7 @@ import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
-import com.isharipov.simplemediaapp.news.model.source.QuerySourceParam;
-import com.isharipov.simplemediaapp.news.model.source.SourceResponse;
+import com.isharipov.simplemediaapp.news.model.source.Source;
 
 import java.util.List;
 
@@ -25,5 +24,5 @@ public interface NewsRepository {
 
     void storeArticlesInDb(List<Article> articles);
 
-    Observable<SourceResponse> getSourcesFromApi(QuerySourceParam queryParam);
+    void storeSourcesInDb(List<Source> sources);
 }

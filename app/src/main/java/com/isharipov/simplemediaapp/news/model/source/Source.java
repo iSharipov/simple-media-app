@@ -1,18 +1,34 @@
 package com.isharipov.simplemediaapp.news.model.source;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * 24.06.2018.
  */
+@Entity(tableName = "sources",
+        indices = @Index(
+                value = {"id", "name", "description", "url", "category", "language", "country"},
+                unique = true))
 public class Source implements Serializable {
+    @PrimaryKey
     private String id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "url")
     private String url;
+    @ColumnInfo(name = "category")
     private String category;
+    @ColumnInfo(name = "language")
     private String language;
+    @ColumnInfo(name = "country")
     private String country;
 
     public String getId() {

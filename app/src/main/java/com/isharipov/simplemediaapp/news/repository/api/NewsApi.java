@@ -24,6 +24,7 @@ public interface NewsApi {
 
     @GET("/v2/everything")
     Observable<ArticleResponse> getEverythingArticles(@Query("q") @Nullable String query,
+                                                      @Query("sources") @NonNull String sources,
                                                       @Query("page") @NonNull Integer page,
                                                       @Query("apiKey") @NonNull String apiKey,
                                                       @Query("pageSize") @NonNull Integer pageSize);

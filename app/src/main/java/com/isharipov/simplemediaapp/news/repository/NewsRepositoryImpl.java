@@ -1,16 +1,19 @@
 package com.isharipov.simplemediaapp.news.repository;
 
+import android.text.TextUtils;
+
 import com.isharipov.simplemediaapp.BuildConfig;
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.ArticleResponse;
 import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
-import com.isharipov.simplemediaapp.news.model.source.QuerySourceParam;
-import com.isharipov.simplemediaapp.news.model.source.SourceResponse;
+import com.isharipov.simplemediaapp.news.model.source.Source;
 import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
-import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
+import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -28,14 +31,15 @@ import timber.log.Timber;
 public class NewsRepositoryImpl implements NewsRepository {
 
     private final NewsApi newsApi;
-    private final ArticleDao articleDao;
+    private final NewsDao newsDao;
 
     @Inject
-    public NewsRepositoryImpl(NewsApi newsApi, ArticleDao articleDao) {
+    public NewsRepositoryImpl(NewsApi newsApi, NewsDao newsDao) {
         this.newsApi = newsApi;
-        this.articleDao = articleDao;
+        this.newsDao = newsDao;
     }
 
+    @Override
     public Observable<ArticleResponse> getArticlesByCategoryFromApi(QueryCategoryParam param) {
         return newsApi
                 .getArticlesByCategory(
@@ -50,15 +54,29 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public Observable<ArticleResponse> getArticlesEverythingFromApi(QueryEverythingParam param) {
-        return newsApi.getEverythingArticles(
-                param.getQuery(),
-                param.getPage(),
-                BuildConfig.NEWS_API_KEY,
-                param.getPageSize());
+        return newsApi.getSources(param.getQuery(),
+                param.getCountry(),
+                BuildConfig.NEWS_API_KEY)
+                .flatMap(sourceResponse -> {
+                    Set<String> sourcesQuery = new HashSet<>();
+                    List<Source> sources = sourceResponse.getSources();
+                    storeSourcesInDb(sources);
+                    for (Source source : sources) {
+                        sourcesQuery.add(source.getName());
+                    }
+                    return newsApi.getEverythingArticles(
+                            param.getQuery(),
+                            TextUtils.join(",", sourcesQuery),
+                            param.getPage(),
+                            BuildConfig.NEWS_API_KEY,
+                            param.getPageSize());
+                });
+
     }
 
+    @Override
     public Observable<ArticleResponse> getArticlesByCategoryFromDb(QueryCategoryParam param) {
-        return articleDao.getArticlesByCategory(param.getCategory())
+        return newsDao.getArticlesByCategory(param.getCategory())
                 .filter(articles -> !articles.isEmpty())
                 .map(articles -> {
                     ArticleResponse articleResponse = new ArticleResponse();
@@ -69,7 +87,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public Observable<ArticleResponse> getArticlesEverythingFromDb() {
-        return articleDao.getArticlesWhereNoCategory()
+        return newsDao.getArticlesWhereNoCategory()
                 .filter(articles -> !articles.isEmpty())
                 .map(articles -> {
                     ArticleResponse articleResponse = new ArticleResponse();
@@ -78,8 +96,9 @@ public class NewsRepositoryImpl implements NewsRepository {
                 }).toObservable();
     }
 
+    @Override
     public void storeArticlesInDb(List<Article> articles) {
-        Completable.fromAction(() -> articleDao.insertAll(articles))
+        Completable.fromAction(() -> newsDao.insertArticles(articles))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io()).subscribe(new CompletableObserver() {
             @Override
@@ -99,11 +118,24 @@ public class NewsRepositoryImpl implements NewsRepository {
         });
     }
 
-    @Override
-    public Observable<SourceResponse> getSourcesFromApi(QuerySourceParam param) {
-        return newsApi.getSources(
-                param.getQuery(),
-                param.getCountry(),
-                BuildConfig.NEWS_API_KEY);
+    public void storeSourcesInDb(List<Source> sources) {
+        Completable.fromAction(() -> newsDao.insertSources(sources))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Timber.d("Inserted sources from API to DB...");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 }

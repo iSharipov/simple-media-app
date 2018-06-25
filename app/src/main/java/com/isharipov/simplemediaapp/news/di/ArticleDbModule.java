@@ -7,7 +7,7 @@ import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 import com.isharipov.simplemediaapp.news.repository.NewsRepositoryImpl;
 import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
-import com.isharipov.simplemediaapp.news.repository.db.ArticleDao;
+import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
 
 import javax.inject.Singleton;
 
@@ -28,13 +28,13 @@ public class ArticleDbModule {
 
     @Singleton
     @Provides
-    ArticleDao providesArticleDao(AppDatabase appDatabase) {
+    NewsDao providesArticleDao(AppDatabase appDatabase) {
         return appDatabase.articleDao();
     }
 
     @Singleton
     @Provides
-    NewsRepository productRepository(NewsApi newsApi, ArticleDao articleDao) {
-        return new NewsRepositoryImpl(newsApi, articleDao);
+    NewsRepository productRepository(NewsApi newsApi, NewsDao newsDao) {
+        return new NewsRepositoryImpl(newsApi, newsDao);
     }
 }
