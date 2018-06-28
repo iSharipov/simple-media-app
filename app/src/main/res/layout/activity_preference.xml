@@ -1,0 +1,13 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PreferenceNewsActivity">
+
+    <fragment
+        android:id="@+id/preference_fragment"
+        android:name="com.isharipov.simplemediaapp.news.preference.PreferenceNewsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.constraint.ConstraintLayout>

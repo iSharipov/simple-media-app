@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.news.ui.news.category;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
+import com.isharipov.simplemediaapp.util.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
     private int position;
     private int page = 1;
+    private String country;
     private CategoryAdapter categoryAdapter;
     @Inject
     CategoryContract.Presenter presenter;
@@ -43,6 +47,8 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     SwipeRefreshLayout categoryRefreshLayout;
     @BindArray(R.array.query_param)
     String[] categoryQueryParam;
+    @BindArray(R.array.pref_country_value)
+    String[] prefCountryValue;
 
     @Inject
     public CategoryFragment() {
@@ -58,6 +64,11 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
@@ -70,7 +81,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
         categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], ++page));
+            presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page));
         });
     }
 
@@ -83,6 +94,15 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
         return root;
     }
 
+    private void initCountryParam() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        if (preferences.contains("pref_newsCategoryPiece")) {
+            country = preferences.getString("pref_newsCategoryPiece", "en");
+        } else {
+            country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
+        }
+    }
+
     private void setupUI() {
         categoryRecyclerLayout.setLayoutManager(new GridLayoutManager(getContext(), 1));
         categoryRecyclerLayout.setAdapter(categoryAdapter);
@@ -92,8 +112,10 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     @Override
     public void onResume() {
         super.onResume();
+        initCountryParam();
+        categoryAdapter.clearArticles();
         presenter.attachView(this);
-        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
 
     @Override
@@ -116,14 +138,14 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
     @Override
     public void showContent() {
-        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
 
     @Override
     public void onRefresh() {
         page = 1;
         categoryAdapter.clearArticles();
-        presenter.loadArticlesFromApi(new QueryCategoryParam("ru", categoryQueryParam[position], page));
+        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
 
     @Override

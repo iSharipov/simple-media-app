@@ -1,15 +1,24 @@
 package com.isharipov.simplemediaapp.news.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.isharipov.simplemediaapp.PreferenceNewsActivity;
 import com.isharipov.simplemediaapp.R;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -29,6 +38,8 @@ public class NewsFragment extends DaggerFragment {
     ViewPager viewPager;
     @BindArray(R.array.tab_label)
     String[] categoryTabLabel;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,17 +53,49 @@ public class NewsFragment extends DaggerFragment {
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.news_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.news_menu:
+                PreferenceNewsActivity.start(getActivity());
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, root);
+        initToolbar((AppCompatActivity) Objects.requireNonNull(getActivity()));
         initTabPagerAdapter();
-        intitTabLayout();
+        initTabLayout();
         return root;
     }
 
-    private void intitTabLayout() {
+    @SuppressLint("RestrictedApi")
+    private void initToolbar(AppCompatActivity activity) {
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setHomeButtonEnabled(false);
+        activity.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+        activity.getSupportActionBar().setTitle("Baking");
+    }
+
+    private void initTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

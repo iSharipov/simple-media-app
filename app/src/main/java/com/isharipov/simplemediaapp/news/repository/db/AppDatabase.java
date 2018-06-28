@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.source.Source;
 
-@Database(entities = {Article.class, Source.class}, version = 1)
+@Database(entities = {Article.class, Source.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract NewsDao articleDao();
 }

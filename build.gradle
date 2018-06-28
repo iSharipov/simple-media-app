@@ -26,7 +26,7 @@ task clean(type: Delete) {
 }
 
 ext.versions = [ANDROID_SUPPORT  : "27.1.1",
-                CONSTRAINT_LAYOUT: "1.1.1",
+                CONSTRAINT_LAYOUT: "1.1.2",
                 ESPRESSO         : "2.2.2",
                 RETROFIT         : "2.3.0",
                 OK_HTTP          : "3.10.0",
@@ -38,5 +38,5 @@ ext.versions = [ANDROID_SUPPORT  : "27.1.1",
                 LEAK_CANARY      : "1.5.4",
                 GLIDE            : "4.7.1",
                 STETHO           : "1.5.0",
-                ROOM             : "1.1.1-rc1"
+                ROOM             : "1.1.1"
 ]

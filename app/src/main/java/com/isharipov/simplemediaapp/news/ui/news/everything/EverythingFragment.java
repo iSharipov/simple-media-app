@@ -70,9 +70,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
             page = savedInstanceState.getInt(PAGE);
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
-        categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryEverythingParam("ru", ++page));
-        });
+        categoryAdapter.setOnLoadMoreListener(() -> presenter.loadArticlesFromApi(new QueryEverythingParam("ru", ++page)));
     }
 
     @Nullable

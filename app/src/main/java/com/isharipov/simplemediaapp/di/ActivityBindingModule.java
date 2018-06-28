@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.di;
 
 import com.isharipov.simplemediaapp.MainActivity;
+import com.isharipov.simplemediaapp.PreferenceNewsActivity;
+import com.isharipov.simplemediaapp.news.preference.PreferenceNewsFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryFragment;
@@ -20,6 +22,9 @@ public abstract class ActivityBindingModule {
     abstract MainActivity mainActivity();
 
     @ContributesAndroidInjector
+    abstract PreferenceNewsActivity preferenceNewsActivity();
+
+    @ContributesAndroidInjector
     abstract NewsFragment newsFragment();
 
     @ContributesAndroidInjector
@@ -27,6 +32,9 @@ public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract EverythingFragment everythingFragment();
+
+    @ContributesAndroidInjector
+    abstract PreferenceNewsFragment preferenceFragment();
 
     @Binds
     abstract CategoryContract.Presenter categoryPresenter(CategoryPresenter presenter);
