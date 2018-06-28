@@ -43,6 +43,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
+        view.showProgress();
         QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
         Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesByCategoryFromApi(queryCategoryParam);
         articlesFromApi.subscribeOn(Schedulers.io())
@@ -58,6 +59,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                     public void onNext(ArticleResponse articleResponse) {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
+                        view.hideProgress();
                         for (Article article : articles) {
                             article.setCategory(queryCategoryParam.getCategory());
                         }
@@ -67,11 +69,13 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         view.onItemsLoadComplete();
+                        view.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
                         view.onItemsLoadComplete();
+                        view.hideProgress();
                     }
                 });
     }

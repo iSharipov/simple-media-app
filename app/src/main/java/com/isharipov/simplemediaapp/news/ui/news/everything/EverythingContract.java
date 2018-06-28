@@ -12,6 +12,10 @@ public interface EverythingContract {
 
         void showContent();
 
+        void showProgress();
+
+        void hideProgress();
+
         void onItemsLoadComplete();
 
         void setMoreLoaded(boolean moreLoaded);

@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
@@ -45,10 +47,15 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     RecyclerView categoryRecyclerLayout;
     @BindView(R.id.category_refresh_layout)
     SwipeRefreshLayout categoryRefreshLayout;
+    @BindView(R.id.progressBarHolder)
+    FrameLayout progressBarHolderLayout;
     @BindArray(R.array.query_param)
     String[] categoryQueryParam;
     @BindArray(R.array.pref_country_value)
     String[] prefCountryValue;
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+
 
     @Inject
     public CategoryFragment() {
@@ -140,6 +147,23 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     public void showContent() {
         presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
+
+    @Override
+    public void showProgress() {
+        inAnimation = new AlphaAnimation(0f, 1f);
+        inAnimation.setDuration(200);
+        progressBarHolderLayout.setAnimation(inAnimation);
+        progressBarHolderLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        outAnimation = new AlphaAnimation(1f, 0f);
+        outAnimation.setDuration(200);
+        progressBarHolderLayout.setAnimation(outAnimation);
+        progressBarHolderLayout.setVisibility(View.GONE);
+    }
+
 
     @Override
     public void onRefresh() {

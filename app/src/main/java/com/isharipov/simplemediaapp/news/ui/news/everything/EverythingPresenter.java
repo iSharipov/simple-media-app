@@ -41,6 +41,7 @@ public class EverythingPresenter implements EverythingContract.Presenter {
 
     @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
+        view.showProgress();
         QueryEverythingParam queryEverythingParam = (QueryEverythingParam) queryParam;
         Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesEverythingFromApi(queryEverythingParam);
         articlesFromApi.subscribeOn(Schedulers.io())
@@ -56,17 +57,20 @@ public class EverythingPresenter implements EverythingContract.Presenter {
                     public void onNext(ArticleResponse articleResponse) {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
+                        view.hideProgress();
                         newsRepository.storeArticlesInDb(articles);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         view.onItemsLoadComplete();
+                        view.hideProgress();
                     }
 
                     @Override
                     public void onComplete() {
                         view.onItemsLoadComplete();
+                        view.hideProgress();
                     }
                 });
     }
