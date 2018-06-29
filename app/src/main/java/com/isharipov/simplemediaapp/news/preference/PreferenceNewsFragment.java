@@ -8,13 +8,10 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 
 import com.isharipov.simplemediaapp.R;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -22,8 +19,6 @@ import javax.inject.Inject;
  * 25.06.2018.
  */
 public class PreferenceNewsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private ListPreference categoryListPreference;
 
     @Inject
     public PreferenceNewsFragment() {
@@ -38,7 +33,7 @@ public class PreferenceNewsFragment extends PreferenceFragmentCompat implements 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.prefs);
-        Preference preference = findPreference("pref_newsCategoryPiece");
+        Preference preference = findPreference(getString(R.string.pref_news_key));
         if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
             preference.setSummary(listPref.getEntry());

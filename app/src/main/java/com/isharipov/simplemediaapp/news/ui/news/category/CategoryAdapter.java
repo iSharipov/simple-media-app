@@ -48,7 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 super.onScrolled(recyclerView, dx, dy);
                 totalItemCount = recyclerView.getLayoutManager().getItemCount();
                 lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                if (!loading && totalItemCount != 0 && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                     if (onLoadMoreListener != null) {
                         onLoadMoreListener.onLoadMore();
                     }

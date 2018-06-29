@@ -6,6 +6,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.isharipov.simplemediaapp.rx.AppRxSchedulers;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -28,6 +29,8 @@ public class NetworkModule {
     OkHttpClient provideHttpClient(HttpLoggingInterceptor logger, Cache cache) {
         return new OkHttpClient().newBuilder()
                 .addInterceptor(logger)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
                 .addNetworkInterceptor(new StethoInterceptor())
                 .cache(cache)
                 .build();

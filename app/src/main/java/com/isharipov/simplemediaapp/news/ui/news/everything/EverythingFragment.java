@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.news.ui.news.everything;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +18,7 @@ import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.model.Article;
 import com.isharipov.simplemediaapp.news.model.QueryEverythingParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryAdapter;
+import com.isharipov.simplemediaapp.util.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindArray;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
@@ -36,6 +40,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
 
     private int position;
     private int page = 1;
+    private String country;
     private CategoryAdapter categoryAdapter;
     @Inject
     EverythingContract.Presenter presenter;
@@ -47,6 +52,10 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
     FrameLayout progressBarHolderLayout;
     @BindArray(R.array.query_param)
     String[] categoryQueryParam;
+    @BindArray(R.array.pref_country_value)
+    String[] prefCountryValue;
+    @BindString(R.string.pref_news_key)
+    String prefNewsKey;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
 
@@ -76,7 +85,9 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
             page = savedInstanceState.getInt(PAGE);
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
-        categoryAdapter.setOnLoadMoreListener(() -> presenter.loadArticlesFromApi(new QueryEverythingParam("ru", ++page)));
+        categoryAdapter.setOnLoadMoreListener(() -> {
+            presenter.loadArticlesFromApi(new QueryEverythingParam(country, ++page));
+        });
     }
 
     @Nullable
@@ -94,17 +105,41 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
         categoryRefreshLayout.setOnRefreshListener(this);
     }
 
+    private void initCountryParam() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        if (preferences.contains(prefNewsKey)) {
+            country = preferences.getString(prefNewsKey, "en");
+        } else {
+            country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        initCountryParam();
+        categoryAdapter.clearArticles();
         presenter.attachView(this);
-        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam(country, page));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.detachView();
+        hideProgress();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        presenter.detachView();
+        hideProgress();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unsubscribe();
     }
 
     @Override
@@ -121,7 +156,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
 
     @Override
     public void showContent() {
-        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam(country, page));
     }
 
     @Override
@@ -144,7 +179,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
     public void onRefresh() {
         page = 1;
         categoryAdapter.clearArticles();
-        presenter.loadArticlesFromApi(new QueryEverythingParam("ru", page));
+        presenter.loadArticlesFromApi(new QueryEverythingParam(country, page));
     }
 
     @Override

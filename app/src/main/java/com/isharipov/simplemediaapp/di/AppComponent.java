@@ -10,6 +10,7 @@ import com.isharipov.simplemediaapp.news.di.NewsApiModule;
 import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
 import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
+import com.isharipov.simplemediaapp.rx.RxModule;
 
 import javax.inject.Singleton;
 
@@ -26,6 +27,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppContextModule.class,
         ActivityBindingModule.class,
         NetworkModule.class,
+        RxModule.class,
         NewsApiModule.class,
         FaviconFinderApiModule.class,
         ArticleDbModule.class,

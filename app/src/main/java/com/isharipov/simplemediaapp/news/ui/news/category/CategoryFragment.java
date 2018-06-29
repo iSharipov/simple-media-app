@@ -25,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindArray;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
@@ -53,6 +54,8 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     String[] categoryQueryParam;
     @BindArray(R.array.pref_country_value)
     String[] prefCountryValue;
+    @BindString(R.string.pref_news_key)
+    String prefNewsKey;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
 
@@ -103,8 +106,8 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
     private void initCountryParam() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        if (preferences.contains("pref_newsCategoryPiece")) {
-            country = preferences.getString("pref_newsCategoryPiece", "en");
+        if (preferences.contains(prefNewsKey)) {
+            country = preferences.getString(prefNewsKey, "en");
         } else {
             country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
         }
@@ -126,9 +129,22 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        presenter.detachView();
+        hideProgress();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        presenter.detachView();
+        hideProgress();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unsubscribe();
     }
 
     @Override

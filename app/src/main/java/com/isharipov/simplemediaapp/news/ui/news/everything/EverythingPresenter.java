@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,10 +24,12 @@ public class EverythingPresenter implements EverythingContract.Presenter {
 
     private EverythingContract.View view;
     private final NewsRepository newsRepository;
+    private final CompositeDisposable compositeDisposable;
 
     @Inject
-    EverythingPresenter(NewsRepository newsRepository) {
+    EverythingPresenter(NewsRepository newsRepository, CompositeDisposable compositeDisposable) {
         this.newsRepository = newsRepository;
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
@@ -40,6 +43,11 @@ public class EverythingPresenter implements EverythingContract.Presenter {
     }
 
     @Override
+    public void unsubscribe() {
+        compositeDisposable.dispose();
+    }
+
+    @Override
     public void loadArticlesFromApi(QueryParam queryParam) {
         view.showProgress();
         QueryEverythingParam queryEverythingParam = (QueryEverythingParam) queryParam;
@@ -50,7 +58,7 @@ public class EverythingPresenter implements EverythingContract.Presenter {
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -58,6 +66,7 @@ public class EverythingPresenter implements EverythingContract.Presenter {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                         newsRepository.storeArticlesInDb(articles);
                     }
 
@@ -65,12 +74,14 @@ public class EverythingPresenter implements EverythingContract.Presenter {
                     public void onError(Throwable e) {
                         view.onItemsLoadComplete();
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                     }
 
                     @Override
                     public void onComplete() {
                         view.onItemsLoadComplete();
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                     }
                 });
     }

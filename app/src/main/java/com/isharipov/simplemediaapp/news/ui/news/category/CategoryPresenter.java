@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,11 +23,13 @@ import io.reactivex.schedulers.Schedulers;
 public class CategoryPresenter implements CategoryContract.Presenter {
 
     private CategoryContract.View view;
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+    private final CompositeDisposable compositeDisposable;
 
     @Inject
-    CategoryPresenter(NewsRepository newsRepository) {
+    CategoryPresenter(NewsRepository newsRepository, CompositeDisposable compositeDisposable) {
         this.newsRepository = newsRepository;
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
@@ -39,6 +42,11 @@ public class CategoryPresenter implements CategoryContract.Presenter {
         this.view = null;
     }
 
+    @Override
+    public void unsubscribe() {
+        compositeDisposable.dispose();
+    }
+
 
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
@@ -49,10 +57,9 @@ public class CategoryPresenter implements CategoryContract.Presenter {
         articlesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArticleResponse>() {
-
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -60,6 +67,7 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                         List<Article> articles = articleResponse.getArticles();
                         view.setData(articles);
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                         for (Article article : articles) {
                             article.setCategory(queryCategoryParam.getCategory());
                         }
@@ -70,12 +78,14 @@ public class CategoryPresenter implements CategoryContract.Presenter {
                     public void onError(Throwable e) {
                         view.onItemsLoadComplete();
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                     }
 
                     @Override
                     public void onComplete() {
                         view.onItemsLoadComplete();
                         view.hideProgress();
+                        view.setMoreLoaded(false);
                     }
                 });
     }
