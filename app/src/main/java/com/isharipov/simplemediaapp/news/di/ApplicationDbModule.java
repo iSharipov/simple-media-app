@@ -3,9 +3,7 @@ package com.isharipov.simplemediaapp.news.di;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.isharipov.simplemediaapp.news.repository.NewsRepository;
-import com.isharipov.simplemediaapp.news.repository.NewsRepositoryImpl;
-import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
+import com.isharipov.simplemediaapp.music.repository.db.MusicDao;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
 import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
 
@@ -18,7 +16,7 @@ import dagger.Provides;
  * 15.06.2018.
  */
 @Module
-public class ArticleDbModule {
+public class ApplicationDbModule {
 
     @Singleton
     @Provides
@@ -29,12 +27,12 @@ public class ArticleDbModule {
     @Singleton
     @Provides
     NewsDao providesArticleDao(AppDatabase appDatabase) {
-        return appDatabase.articleDao();
+        return appDatabase.newsDao();
     }
 
     @Singleton
     @Provides
-    NewsRepository productRepository(NewsApi newsApi, NewsDao newsDao) {
-        return new NewsRepositoryImpl(newsApi, newsDao);
+    MusicDao providesMusicDao(AppDatabase appDatabase) {
+        return appDatabase.musicDao();
     }
 }
