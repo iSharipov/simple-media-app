@@ -19,12 +19,12 @@ import java.util.List;
 public abstract class MusicDao {
 
     public void insertAllArtists(List<Artist> artists) {
+        _insertAllArtists(artists);
         for (Artist artist : artists) {
             if (artist.getImages() != null) {
                 insertImagesForArtist(artist, artist.getImages());
             }
         }
-        _insertAllArtists(artists);
     }
 
     private void insertImagesForArtist(Artist artist, List<Image> images) {
@@ -48,7 +48,7 @@ public abstract class MusicDao {
     abstract void _insertAllImages(List<Image> images);
 
     @Insert
-    abstract void _insertAllArtists(List<Artist> images);
+    abstract void _insertAllArtists(List<Artist> artists);
 
     @Transaction
     @Query("SELECT * FROM artists")

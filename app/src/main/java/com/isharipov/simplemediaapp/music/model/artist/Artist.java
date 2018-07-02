@@ -3,8 +3,8 @@ package com.isharipov.simplemediaapp.music.model.artist;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,9 +17,11 @@ import java.util.List;
 /**
  * 30.06.2018.
  */
-@Entity(tableName = "artists")
+@Entity(tableName = "artists",
+        indices = @Index(value = {"mbid"}, unique = true))
 public class Artist implements Serializable {
-
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     @SerializedName("name")
     @Expose
     @ColumnInfo(name = "name")
@@ -32,10 +34,8 @@ public class Artist implements Serializable {
     @Expose
     @ColumnInfo(name = "listeners")
     private String listeners;
-    @NonNull
     @SerializedName("mbid")
     @Expose
-    @PrimaryKey
     private String mbid;
     @SerializedName("url")
     @Expose
@@ -49,6 +49,14 @@ public class Artist implements Serializable {
     @Expose
     @Ignore
     private List<Image> images;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -108,7 +116,7 @@ public class Artist implements Serializable {
 
     public Image getImageBySize(Size size) {
         for (Image image : images) {
-            if (Size.containsSize(image.getSize())) {
+            if (size.name().equalsIgnoreCase(image.getSize().toLowerCase())) {
                 return image;
             }
         }

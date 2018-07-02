@@ -38,7 +38,7 @@ public class MusicRepositoryImpl implements MusicRepository {
     public Observable<ArtistsResponse> getArtistsFromApi(QueryParam queryParam) {
         return musicApi
                 .getTopArtists(
-                        queryParam.getPageSize(),
+                        10,
                         queryParam.getPage(),
                         BuildConfig.LASTFM_API_KEY,
                         "json");
@@ -66,7 +66,7 @@ public class MusicRepositoryImpl implements MusicRepository {
 
             @Override
             public void onError(Throwable e) {
-
+                Timber.e(e);
             }
         });
     }

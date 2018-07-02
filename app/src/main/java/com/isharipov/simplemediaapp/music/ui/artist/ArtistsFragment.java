@@ -31,8 +31,8 @@ import dagger.android.support.DaggerFragment;
  */
 public class ArtistsFragment extends DaggerFragment implements MusicContract.View<Artist>, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String PAGE = "PAGE";
-    private int page = 1;
+    private static final String LIMIT = "LIMIT";
+    private int limit = 5;
     private ArtistsAdapter artistsAdapter;
     @BindView(R.id.artists_recycler_layout)
     RecyclerView artistsRecyclerLayout;
@@ -61,12 +61,9 @@ public class ArtistsFragment extends DaggerFragment implements MusicContract.Vie
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
-            page = savedInstanceState.getInt(PAGE);
+            limit = savedInstanceState.getInt(LIMIT);
         }
         artistsAdapter = new ArtistsAdapter(new ArrayList<>(0));
-        artistsAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadFromApi(new QueryParam(++page));
-        });
     }
 
     @Nullable
@@ -130,6 +127,8 @@ public class ArtistsFragment extends DaggerFragment implements MusicContract.Vie
         super.onResume();
         artistsAdapter.clearArticles();
         presenter.attachView(this);
-        presenter.loadFromApi(new QueryParam(page));
+        QueryParam queryParam = new QueryParam(1);
+        queryParam.setPageSize(limit);
+        presenter.loadFromApi(queryParam);
     }
 }
