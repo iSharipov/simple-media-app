@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import com.isharipov.simplemediaapp.music.ui.MusicFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 
 import butterknife.BindView;
@@ -41,21 +42,20 @@ public class MainActivity extends DaggerAppCompatActivity implements BottomNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (navigationId = item.getItemId()) {
             case R.id.navigation_music:
-                return true;
+                return openFragment(MusicFragment.newInstance());
             case R.id.navigation_news:
-                openFragment(NewsFragment.newInstance());
-                return true;
+                return openFragment(NewsFragment.newInstance());
             case R.id.navigation_movies:
                 return true;
         }
         return false;
     }
 
-    private void openFragment(Fragment fragment) {
+    private boolean openFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        return fragmentTransaction.commit() >= 0;
     }
 
     @Override

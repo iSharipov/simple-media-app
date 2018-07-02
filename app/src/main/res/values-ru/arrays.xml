@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="tab_label">
+    <string-array name="news_tab_label">
         <item>Всё</item>
         <item>Бизнес</item>
         <item>Развлечения</item>
@@ -11,7 +11,7 @@
         <item>Технологии</item>
     </string-array>
 
-    <string-array name="query_param">
+    <string-array name="news_query_param">
         <item>everything</item>
         <item>business</item>
         <item>entertainment</item>
@@ -20,5 +20,10 @@
         <item>science</item>
         <item>sports</item>
         <item>technology</item>
+    </string-array>
+
+    <string-array name="music_tab_label">
+        <item>Исполнители</item>
+        <item>Треки</item>
     </string-array>
 </resources>

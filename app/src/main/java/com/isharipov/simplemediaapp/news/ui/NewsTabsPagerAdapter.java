@@ -13,12 +13,12 @@ import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 /**
  * 12.06.2018.
  */
-public class TabsPagerAdapter extends FragmentPagerAdapter {
+public class NewsTabsPagerAdapter extends FragmentPagerAdapter {
 
     private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private final String[] categoryTabLabel;
 
-    public TabsPagerAdapter(FragmentManager fragmentManager, String[] categoryTabLabel) {
+    public NewsTabsPagerAdapter(FragmentManager fragmentManager, String[] categoryTabLabel) {
         super(fragmentManager);
         this.categoryTabLabel = categoryTabLabel;
     }

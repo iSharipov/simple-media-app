@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.ui.news.category;
+package com.isharipov.simplemediaapp.music.ui.artist;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.glide.GlideApp;
-import com.isharipov.simplemediaapp.news.model.Article;
+import com.isharipov.simplemediaapp.music.model.Image;
+import com.isharipov.simplemediaapp.music.model.Size;
+import com.isharipov.simplemediaapp.music.model.artist.Artist;
+import com.isharipov.simplemediaapp.news.ui.news.category.OnLoadMoreListener;
 
 import java.util.List;
 
@@ -22,21 +25,20 @@ import butterknife.ButterKnife;
 import static com.bumptech.glide.util.Preconditions.checkNotNull;
 
 /**
- * 13.06.2018.
+ * 01.07.2018.
  */
-public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class ArtistsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_ITEM = 1;
     private static final int VIEW_PROG = 0;
 
-    private final List<Article> articles;
+    private final List<Artist> artists;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
 
-    public CategoryAdapter(List<Article> articles) {
-        this.articles = articles;
+    public ArtistsAdapter(List<Artist> artists) {
+        this.artists = artists;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerView.ViewHolder vh;
         if (viewType == VIEW_ITEM) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.news_article_item_row, parent, false);
+                    .inflate(R.layout.music_artist_item_row, parent, false);
             vh = new ViewHolder(v);
         } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(
@@ -80,14 +82,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ViewHolder normalViewHolder = (ViewHolder) holder;
-            Article article = articles.get(position);
-            normalViewHolder.articleDescription.setText(article.getDescription());
-            normalViewHolder.articleTitle.setText(article.getTitle());
+            Artist artist = artists.get(position);
+            normalViewHolder.artistName.setText(artist.getName());
+            normalViewHolder.artistPlaycount.setText(artist.getPlaycount());
+            normalViewHolder.artistListeners.setText(artist.getListeners());
+            Image imageBySize = artist.getImageBySize(Size.MEDIUM);
 
             GlideApp
                     .with(holder.itemView)
-                    .load(article.getUrlToImage())
-                    .into(normalViewHolder.articleImage);
+                    .load(imageBySize != null ? imageBySize.getText() : R.drawable.ic_action_name)
+                    .into(normalViewHolder.artistImage);
         } else if (holder instanceof ProgressViewHolder) {
             ProgressViewHolder progressViewHolder = (ProgressViewHolder) holder;
             progressViewHolder.loadMoreProgressBar.setIndeterminate(true);
@@ -96,23 +100,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public int getItemCount() {
-        return articles.size();
+    public int getItemViewType(int position) {
+        return artists.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return articles.get(position) != null ? VIEW_ITEM : VIEW_PROG;
+    public int getItemCount() {
+        return artists.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.article_image)
-        ImageView articleImage;
-        @BindView(R.id.article_description)
-        TextView articleDescription;
-        @BindView(R.id.article_title)
-        TextView articleTitle;
+        @BindView(R.id.artist_image)
+        ImageView artistImage;
+        @BindView(R.id.artist_name)
+        TextView artistName;
+        @BindView(R.id.artist_playcount)
+        TextView artistPlaycount;
+        @BindView(R.id.artist_listeners)
+        TextView artistListeners;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -130,24 +136,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void replaceData(List<Article> articles) {
-        checkNotNull(articles);
-        this.articles.clear();
-        setList(articles);
+    public void replaceData(List<Artist> artists) {
+        checkNotNull(artists);
+        this.artists.clear();
+        setList(artists);
     }
 
-    public void appendData(List<Article> articles) {
-        checkNotNull(articles);
-        setList(articles);
+    public void appendData(List<Artist> artists) {
+        checkNotNull(artists);
+        setList(artists);
     }
 
     public void clearArticles() {
-        this.articles.clear();
+        this.artists.clear();
         notifyDataSetChanged();
     }
 
-    private void setList(List<Article> nextArticles) {
-        this.articles.addAll(nextArticles);
+    private void setList(List<Artist> nextArtist) {
+        this.artists.addAll(nextArtist);
         notifyDataSetChanged();
     }
 

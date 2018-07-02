@@ -1,7 +1,8 @@
 package com.isharipov.simplemediaapp.news.ui.news.category;
 
 import com.isharipov.simplemediaapp.BasePresenter;
-import com.isharipov.simplemediaapp.BaseView;
+import com.isharipov.simplemediaapp.news.model.QueryParam;
+import com.isharipov.simplemediaapp.news.ui.BaseView;
 
 /**
  * 12.06.2018.
@@ -23,6 +24,6 @@ public interface CategoryContract {
     }
 
     interface Presenter extends BasePresenter<CategoryContract.View> {
-
+        void loadArticlesFromApi(QueryParam queryParam);
     }
 }

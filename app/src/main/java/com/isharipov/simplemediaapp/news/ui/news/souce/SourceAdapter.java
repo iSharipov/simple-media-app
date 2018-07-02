@@ -31,7 +31,7 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.SourceView
     @Override
     public SourceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View root = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.source_item_row, parent, false);
+                .inflate(R.layout.news_source_item_row, parent, false);
         return new SourceViewHolder(root);
     }
 

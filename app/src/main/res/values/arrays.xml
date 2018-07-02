@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="tab_label">
+    <string-array name="news_tab_label">
         <item>Everything</item>
         <item>Business</item>
         <item>Entertainment</item>
@@ -11,7 +11,7 @@
         <item>Technology</item>
     </string-array>
 
-    <string-array name="query_param">
+    <string-array name="news_query_param">
         <item>everything</item>
         <item>business</item>
         <item>entertainment</item>
@@ -135,4 +135,9 @@
         <item>@string/pref_country_value_us</item>
         <item>@string/pref_country_value_ve</item>
     </array>
+
+    <string-array name="music_tab_label">
+        <item>Artists</item>
+        <item>Tracks</item>
+    </string-array>
 </resources>

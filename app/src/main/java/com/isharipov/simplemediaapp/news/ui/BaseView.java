@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp;
+package com.isharipov.simplemediaapp.news.ui;
 
 import com.isharipov.simplemediaapp.news.model.Article;
 

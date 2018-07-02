@@ -12,6 +12,4 @@ public interface BasePresenter<V> {
     void detachView();
 
     void unsubscribe();
-
-    void loadArticlesFromApi(QueryParam queryParam);
 }

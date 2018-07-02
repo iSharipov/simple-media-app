@@ -1,7 +1,7 @@
 package com.isharipov.simplemediaapp.news.ui.news.everything;
 
 import com.isharipov.simplemediaapp.BasePresenter;
-import com.isharipov.simplemediaapp.BaseView;
+import com.isharipov.simplemediaapp.news.ui.BaseView;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 
 /**
@@ -22,6 +22,7 @@ public interface EverythingContract {
     }
 
     interface Presenter extends BasePresenter<EverythingContract.View> {
+        void loadArticlesFromApi(QueryParam queryParam);
         void loadSources(QueryParam queryParam);
     }
 }

@@ -50,7 +50,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
     SwipeRefreshLayout categoryRefreshLayout;
     @BindView(R.id.progressBarHolder)
     FrameLayout progressBarHolderLayout;
-    @BindArray(R.array.query_param)
+    @BindArray(R.array.news_query_param)
     String[] categoryQueryParam;
     @BindArray(R.array.pref_country_value)
     String[] prefCountryValue;
@@ -93,7 +93,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_category, container, false);
+        View root = inflater.inflate(R.layout.news_fragment_category, container, false);
         ButterKnife.bind(this, root);
         setupUI();
         return root;

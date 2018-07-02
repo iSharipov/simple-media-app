@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class MusicApiModule {
-    private static final String BASE_URL = "http://ws.audioscrobbler.com/2.0";
+    private static final String BASE_URL = "http://ws.audioscrobbler.com/";
 
     @Provides
     @Singleton

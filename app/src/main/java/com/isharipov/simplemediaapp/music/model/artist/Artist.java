@@ -1,8 +1,15 @@
 package com.isharipov.simplemediaapp.music.model.artist;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.isharipov.simplemediaapp.music.model.Image;
+import com.isharipov.simplemediaapp.music.model.Size;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,29 +17,38 @@ import java.util.List;
 /**
  * 30.06.2018.
  */
+@Entity(tableName = "artists")
 public class Artist implements Serializable {
 
     @SerializedName("name")
     @Expose
+    @ColumnInfo(name = "name")
     private String name;
     @SerializedName("playcount")
     @Expose
+    @ColumnInfo(name = "playcount")
     private String playcount;
     @SerializedName("listeners")
     @Expose
+    @ColumnInfo(name = "listeners")
     private String listeners;
+    @NonNull
     @SerializedName("mbid")
     @Expose
+    @PrimaryKey
     private String mbid;
     @SerializedName("url")
     @Expose
+    @ColumnInfo(name = "url")
     private String url;
     @SerializedName("streamable")
     @Expose
+    @ColumnInfo(name = "streamable")
     private String streamable;
     @SerializedName("image")
     @Expose
-    private List<Image> image;
+    @Ignore
+    private List<Image> images;
 
     public String getName() {
         return name;
@@ -82,12 +98,20 @@ public class Artist implements Serializable {
         this.streamable = streamable;
     }
 
-    public List<Image> getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(List<Image> image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
+    public Image getImageBySize(Size size) {
+        for (Image image : images) {
+            if (Size.containsSize(image.getSize())) {
+                return image;
+            }
+        }
+        return null;
+    }
 }

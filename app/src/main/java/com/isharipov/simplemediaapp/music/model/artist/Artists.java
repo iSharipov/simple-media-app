@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 30.06.2018.
  */
-public class ArtistsReponse implements Serializable{
+public class Artists implements Serializable {
 
     @SerializedName("artist")
     @Expose
