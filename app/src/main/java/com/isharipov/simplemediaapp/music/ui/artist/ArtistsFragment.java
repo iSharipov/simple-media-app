@@ -108,18 +108,16 @@ public class ArtistsFragment extends DaggerFragment implements MusicContract.Vie
     }
 
     @Override
-    public void setMoreLoaded(boolean moreLoaded) {
-
-    }
-
-    @Override
     public void setData(List<Artist> artists) {
         artistsAdapter.appendData(artists);
     }
 
     @Override
     public void onRefresh() {
-
+        artistsAdapter.clearArticles();
+        QueryParam queryParam = new QueryParam(1);
+        queryParam.setPageSize(limit);
+        presenter.loadFromApi(queryParam);
     }
 
     @Override

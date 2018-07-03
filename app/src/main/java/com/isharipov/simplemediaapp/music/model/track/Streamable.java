@@ -3,7 +3,9 @@ package com.isharipov.simplemediaapp.music.model.track;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Streamable {
+import java.io.Serializable;
+
+public class Streamable implements Serializable {
 
     @SerializedName("#text")
     @Expose

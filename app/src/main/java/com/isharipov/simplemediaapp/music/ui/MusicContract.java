@@ -15,10 +15,7 @@ public interface MusicContract {
 
         void hideProgress();
 
-
         void onItemsLoadComplete();
-
-        void setMoreLoaded(boolean moreLoaded);
     }
 
     interface Presenter extends BasePresenter<MusicContract.View> {

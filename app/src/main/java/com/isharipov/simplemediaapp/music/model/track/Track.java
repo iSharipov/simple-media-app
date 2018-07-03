@@ -1,14 +1,26 @@
 package com.isharipov.simplemediaapp.music.model.track;
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.isharipov.simplemediaapp.music.model.Image;
+import com.isharipov.simplemediaapp.music.model.ImageSize;
 import com.isharipov.simplemediaapp.music.model.artist.Artist;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Track {
+@Entity(tableName = "tracks",
+        indices = @Index(value = {"name", "artistImdb"}, unique = true))
+public class Track implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -29,13 +41,27 @@ public class Track {
     private String url;
     @SerializedName("streamable")
     @Expose
+    @Embedded
     private Streamable streamable;
     @SerializedName("artist")
     @Expose
+    @Ignore
     private Artist artist;
     @SerializedName("image")
     @Expose
-    private List<Image> image = null;
+    @Ignore
+    private List<Image> images;
+    private String artistName;
+    private String artistImdb;
+    private String artistUrl;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -101,12 +127,45 @@ public class Track {
         this.artist = artist;
     }
 
-    public List<Image> getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(List<Image> image) {
-        this.image = image;
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public String getArtistImdb() {
+        return artistImdb;
+    }
+
+    public void setArtistImdb(String artistImdb) {
+        this.artistImdb = artistImdb;
+    }
+
+    public String getArtistUrl() {
+        return artistUrl;
+    }
+
+    public void setArtistUrl(String artistUrl) {
+        this.artistUrl = artistUrl;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public Image getImageBySize(ImageSize imageSize) {
+        for (Image image : images) {
+            if (imageSize.name().equalsIgnoreCase(image.getSize().toLowerCase())) {
+                return image;
+            }
+        }
+        return null;
     }
 
 }

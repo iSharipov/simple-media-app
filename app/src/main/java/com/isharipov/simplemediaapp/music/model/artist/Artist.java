@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.isharipov.simplemediaapp.music.model.Image;
-import com.isharipov.simplemediaapp.music.model.Size;
+import com.isharipov.simplemediaapp.music.model.ImageSize;
 
 import java.io.Serializable;
 import java.util.List;
@@ -114,9 +114,9 @@ public class Artist implements Serializable {
         this.images = images;
     }
 
-    public Image getImageBySize(Size size) {
+    public Image getImageBySize(ImageSize imageSize) {
         for (Image image : images) {
-            if (size.name().equalsIgnoreCase(image.getSize().toLowerCase())) {
+            if (imageSize.name().equalsIgnoreCase(image.getSize().toLowerCase())) {
                 return image;
             }
         }

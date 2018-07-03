@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * 13.06.2018.
@@ -28,7 +29,7 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    MusicRepository provideMusicRepository(MusicApi musicApi, MusicDao musicDao) {
-        return new MusicRepositoryImpl(musicApi, musicDao);
+    MusicRepository provideMusicRepository(MusicApi musicApi, MusicDao musicDao, CompositeDisposable compositeDisposable) {
+        return new MusicRepositoryImpl(musicApi, musicDao, compositeDisposable);
     }
 }

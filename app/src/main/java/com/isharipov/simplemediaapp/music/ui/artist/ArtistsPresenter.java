@@ -47,7 +47,6 @@ public class ArtistsPresenter extends MusicPresenter {
                         List<Artist> artists = artistsResponse.getArtists().getArtist();
                         view.setData(artists);
                         view.hideProgress();
-                        view.setMoreLoaded(false);
                         repository.storeArtistsInDb(artists);
                     }
 
@@ -55,14 +54,12 @@ public class ArtistsPresenter extends MusicPresenter {
                     public void onError(Throwable e) {
                         view.onItemsLoadComplete();
                         view.hideProgress();
-                        view.setMoreLoaded(false);
                     }
 
                     @Override
                     public void onComplete() {
                         view.onItemsLoadComplete();
                         view.hideProgress();
-                        view.setMoreLoaded(false);
                     }
                 });
     }

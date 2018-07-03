@@ -1,8 +1,8 @@
 package com.isharipov.simplemediaapp.music.repository;
 
 import com.isharipov.simplemediaapp.music.model.artist.Artist;
-import com.isharipov.simplemediaapp.music.model.artist.Artists;
 import com.isharipov.simplemediaapp.music.model.artist.ArtistsResponse;
+import com.isharipov.simplemediaapp.music.model.track.Track;
 import com.isharipov.simplemediaapp.music.model.track.TracksResponse;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 
@@ -19,4 +19,6 @@ public interface MusicRepository {
     Observable<TracksResponse> getTracksFromApi(QueryParam queryParam);
 
     void storeArtistsInDb(List<Artist> artists);
+
+    void storeTracksInDb(List<Track> tracks);
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * 13.06.2018.
  */
-@Entity(tableName = "articles", indices = @Index(value = {"publishedAt", "category"}, unique = true))
+@Entity(tableName = "articles", indices = @Index(value = {"author", "title", "publishedAt", "category"}, unique = true))
 public class Article implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;

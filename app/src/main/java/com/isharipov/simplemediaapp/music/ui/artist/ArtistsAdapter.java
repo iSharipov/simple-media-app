@@ -20,12 +20,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.bumptech.glide.util.Preconditions.checkNotNull;
-import static com.isharipov.simplemediaapp.music.model.Size.EXTRALARGE;
+import static com.isharipov.simplemediaapp.music.model.ImageSize.EXTRALARGE;
 
 /**
  * 01.07.2018.
  */
-public class ArtistsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ViewHolder> {
 
     private final List<Artist> artists;
 
@@ -35,30 +35,24 @@ public class ArtistsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.music_artist_item_row, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder) {
-            ViewHolder normalViewHolder = (ViewHolder) holder;
-            Artist artist = artists.get(position);
-            normalViewHolder.artistName.setText(artist.getName());
-            normalViewHolder.artistPlaycount.setText(artist.getPlaycount());
-            normalViewHolder.artistListeners.setText(artist.getListeners());
-            Image imageBySize = artist.getImageBySize(EXTRALARGE);
-            GlideApp
-                    .with(holder.itemView)
-                    .load(imageBySize != null ? imageBySize.getText() : R.drawable.ic_action_name)
-                    .centerCrop()
-                    .into(normalViewHolder.artistImage);
-        } else if (holder instanceof ProgressViewHolder) {
-            ProgressViewHolder progressViewHolder = (ProgressViewHolder) holder;
-            progressViewHolder.loadMoreProgressBar.setIndeterminate(true);
-        }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Artist artist = artists.get(position);
+        holder.artistName.setText(artist.getName());
+        holder.artistPlaycount.setText(artist.getPlaycount());
+        holder.artistListeners.setText(artist.getListeners());
+        Image imageBySize = artist.getImageBySize(EXTRALARGE);
+        GlideApp
+                .with(holder.itemView)
+                .load(imageBySize != null ? imageBySize.getText() : R.drawable.ic_action_name)
+                .centerCrop()
+                .into(holder.artistImage);
     }
 
     @Override
