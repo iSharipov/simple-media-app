@@ -111,6 +111,7 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
             country = preferences.getString(prefNewsKey, "en");
         } else {
             country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
+            preferences.edit().putString(prefNewsKey, country).apply();
         }
     }
 

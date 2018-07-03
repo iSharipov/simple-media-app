@@ -110,6 +110,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
             country = preferences.getString(prefNewsKey, "en");
         } else {
             country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
+            preferences.edit().putString(prefNewsKey, country).apply();
         }
     }
 
