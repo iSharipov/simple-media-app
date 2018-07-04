@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp;
+package com.isharipov.simplemediaapp.music.preference;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,6 +9,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.isharipov.simplemediaapp.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -16,21 +18,21 @@ import dagger.android.support.DaggerAppCompatActivity;
 /**
  * 26.06.2018.
  */
-public class PreferenceNewsActivity extends DaggerAppCompatActivity {
+public class PreferenceMusicActivity extends DaggerAppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
 
     public static void start(Activity activity) {
-        Intent intent = new Intent(activity, PreferenceNewsActivity.class);
+        Intent intent = new Intent(activity, PreferenceMusicActivity.class);
         activity.startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+        setContentView(R.layout.activity_music_preference);
         ButterKnife.bind(this);
         initToolbar();
     }

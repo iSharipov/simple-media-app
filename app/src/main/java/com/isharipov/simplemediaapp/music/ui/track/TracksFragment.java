@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.music.ui.track;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerFragment;
@@ -32,13 +35,15 @@ import dagger.android.support.DaggerFragment;
 public class TracksFragment extends DaggerFragment implements MusicContract.View<Track>, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String LIMIT = "LIMIT";
-    private int limit = 5;
+    private int limit;
     private TracksAdapter tracksAdapter;
     @BindView(R.id.tracks_recycler_layout)
     RecyclerView tracksRecyclerLayout;
     @BindView(R.id.tracks_refresh_layout)
     SwipeRefreshLayout tracksRefreshLayout;
     @BindView(R.id.progressBarHolder)
+    @BindString(R.string.pref_music_key)
+    String prefMusicKey;
     FrameLayout progressBarHolderLayout;
     @Inject
     TracksPresenter presenter;
@@ -124,10 +129,17 @@ public class TracksFragment extends DaggerFragment implements MusicContract.View
     @Override
     public void onResume() {
         super.onResume();
-        tracksAdapter.clearArticles();
         presenter.attachView(this);
+        initLimitParam();
         QueryParam queryParam = new QueryParam(1);
         queryParam.setPageSize(limit);
+        tracksAdapter.clearArticles();
+
         presenter.loadFromApi(queryParam);
+    }
+
+    private void initLimitParam() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        limit = Integer.valueOf(preferences.getString(prefMusicKey, "10"));
     }
 }

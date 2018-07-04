@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <PreferenceCategory android:title="@string/pref_label">
+    <PreferenceCategory android:title="@string/pref_news_label">
         <ListPreference
             android:entries="@array/pref_country_label"
             android:entryValues="@array/pref_country_value"

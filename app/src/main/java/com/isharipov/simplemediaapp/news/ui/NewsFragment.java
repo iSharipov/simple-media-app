@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.isharipov.simplemediaapp.PreferenceNewsActivity;
+import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 import com.isharipov.simplemediaapp.R;
 
 import java.util.Objects;

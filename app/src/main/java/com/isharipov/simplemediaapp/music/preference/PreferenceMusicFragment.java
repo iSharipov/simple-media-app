@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.preference;
+package com.isharipov.simplemediaapp.music.preference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,12 +16,11 @@ import com.isharipov.simplemediaapp.R;
 import javax.inject.Inject;
 
 /**
- * 25.06.2018.
+ * 03.07.2018.
  */
-public class PreferenceNewsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
+public class PreferenceMusicFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
-    public PreferenceNewsFragment() {
+    public PreferenceMusicFragment() {
 
     }
 
@@ -32,11 +31,11 @@ public class PreferenceNewsFragment extends PreferenceFragmentCompat implements 
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.news_prefs);
-        Preference preference = findPreference(getString(R.string.pref_news_key));
+        addPreferencesFromResource(R.xml.music_prefs);
+        Preference preference = findPreference(getString(R.string.pref_music_key));
         if (preference instanceof ListPreference) {
             ListPreference listPref = (ListPreference) preference;
-            preference.setSummary(listPref.getEntry());
+            preference.setSummary(listPref.getValue());
         }
     }
 
@@ -51,7 +50,7 @@ public class PreferenceNewsFragment extends PreferenceFragmentCompat implements 
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-        if (key.equals(getString(R.string.pref_news_key))) {
+        if (key.equals(getString(R.string.pref_music_key))) {
             Preference preference = findPreference(key);
             if (preference instanceof ListPreference) {
                 ListPreference listPref = (ListPreference) preference;

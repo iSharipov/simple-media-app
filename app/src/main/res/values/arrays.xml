@@ -140,4 +140,20 @@
         <item>Artists</item>
         <item>Tracks</item>
     </string-array>
+
+    <string-array name="pref_music_label">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="pref_music_value">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
 </resources>

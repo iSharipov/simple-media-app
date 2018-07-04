@@ -1,10 +1,12 @@
 package com.isharipov.simplemediaapp.di;
 
 import com.isharipov.simplemediaapp.MainActivity;
-import com.isharipov.simplemediaapp.PreferenceNewsActivity;
+import com.isharipov.simplemediaapp.music.preference.PreferenceMusicActivity;
+import com.isharipov.simplemediaapp.music.preference.PreferenceMusicFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
 import com.isharipov.simplemediaapp.music.ui.artist.ArtistsFragment;
 import com.isharipov.simplemediaapp.music.ui.track.TracksFragment;
+import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 import com.isharipov.simplemediaapp.news.preference.PreferenceNewsFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
@@ -28,6 +30,9 @@ public abstract class ActivityBindingModule {
     abstract PreferenceNewsActivity preferenceNewsActivity();
 
     @ContributesAndroidInjector
+    abstract PreferenceMusicActivity preferenceMusicActivity();
+
+    @ContributesAndroidInjector
     abstract NewsFragment newsFragment();
 
     @ContributesAndroidInjector
@@ -37,7 +42,10 @@ public abstract class ActivityBindingModule {
     abstract EverythingFragment everythingFragment();
 
     @ContributesAndroidInjector
-    abstract PreferenceNewsFragment preferenceFragment();
+    abstract PreferenceNewsFragment preferenceNewsFragment();
+
+    @ContributesAndroidInjector
+    abstract PreferenceMusicFragment preferenceMusicFragment();
 
     @Binds
     abstract CategoryContract.Presenter categoryPresenter(CategoryPresenter presenter);

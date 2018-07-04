@@ -9,10 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
+import com.isharipov.simplemediaapp.music.preference.PreferenceMusicActivity;
 
 import java.util.Objects;
 
@@ -50,6 +54,12 @@ public class MusicFragment extends DaggerFragment {
     @Inject
     public MusicFragment() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -112,4 +122,20 @@ public class MusicFragment extends DaggerFragment {
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.music_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.music_menu:
+                PreferenceMusicActivity.start(getActivity());
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

@@ -27,13 +27,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PreferenceNewsActivity"
+            android:name=".news.preference.PreferenceNewsActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".music.preference.PreferenceMusicActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
     </application>
 
 </manifest>

@@ -42,7 +42,7 @@ public class MusicRepositoryImpl implements MusicRepository {
     public Observable<ArtistsResponse> getArtistsFromApi(QueryParam queryParam) {
         return musicApi
                 .getTopArtists(
-                        10,
+                        queryParam.getPageSize(),
                         queryParam.getPage(),
                         BuildConfig.LASTFM_API_KEY,
                         "json");
@@ -52,7 +52,7 @@ public class MusicRepositoryImpl implements MusicRepository {
     public Observable<TracksResponse> getTracksFromApi(QueryParam queryParam) {
         return musicApi
                 .getTopTracks(
-                        10,
+                        queryParam.getPageSize(),
                         queryParam.getPage(),
                         BuildConfig.LASTFM_API_KEY,
                         "json");

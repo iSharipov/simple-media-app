@@ -6,8 +6,10 @@
     <string name="media_source_img" translatable="false">media source image</string>
     <string name="pref_country_label">Country</string>
     <string name="prefs_title">Preference</string>
-    <string name="pref_label">News</string>
+    <string name="pref_news_label">News</string>
+    <string name="pref_music_label">Музыка</string>
     <string name="pref_news_key" translatable="false">pref_newsCategoryPiece</string>
+    <string name="pref_music_key" translatable="false">pref_musicPiece</string>
 
     <string name="pref_country_label_ar">Argentina</string>
     <string name="pref_country_label_au">Australia</string>

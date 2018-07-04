@@ -5,7 +5,8 @@
     <string name="title_movies">Кино</string>
     <string name="pref_country_label">Страна</string>
     <string name="prefs_title">Настройки</string>
-    <string name="pref_label">Новости</string>
+    <string name="pref_news_label">Новости</string>
+    <string name="pref_music_label">Музыка</string>
 
     <string name="pref_country_label_ar">Аргентина</string>
     <string name="pref_country_label_au">Австралия</string>
