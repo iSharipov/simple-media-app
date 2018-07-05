@@ -7,7 +7,7 @@
     <string name="pref_country_label">Country</string>
     <string name="prefs_title">Preference</string>
     <string name="pref_news_label">News</string>
-    <string name="pref_music_label">Музыка</string>
+    <string name="pref_music_label">Music</string>
     <string name="pref_news_key" translatable="false">pref_newsCategoryPiece</string>
     <string name="pref_music_key" translatable="false">pref_musicPiece</string>
 
@@ -120,4 +120,10 @@
     <string name="pref_country_value_gb" translatable="false">gb</string>
     <string name="pref_country_value_us" translatable="false">us</string>
     <string name="pref_country_value_ve" translatable="false">ve</string>
+
+    <string name="pref_music_label_5" translatable="false">5</string>
+    <string name="pref_music_label_10" translatable="false">10</string>
+    <string name="pref_music_label_15" translatable="false">15</string>
+    <string name="pref_music_label_25" translatable="false">25</string>
+    <string name="pref_music_label_50" translatable="false">50</string>
 </resources>

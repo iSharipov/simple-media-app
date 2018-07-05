@@ -42,9 +42,9 @@ public class TracksFragment extends DaggerFragment implements MusicContract.View
     @BindView(R.id.tracks_refresh_layout)
     SwipeRefreshLayout tracksRefreshLayout;
     @BindView(R.id.progressBarHolder)
+    FrameLayout progressBarHolderLayout;
     @BindString(R.string.pref_music_key)
     String prefMusicKey;
-    FrameLayout progressBarHolderLayout;
     @Inject
     TracksPresenter presenter;
     AlphaAnimation inAnimation;

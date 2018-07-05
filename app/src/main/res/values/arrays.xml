@@ -142,18 +142,18 @@
     </string-array>
 
     <string-array name="pref_music_label">
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>25</item>
-        <item>50</item>
+        <item>@string/pref_music_label_5</item>
+        <item>@string/pref_music_label_10</item>
+        <item>@string/pref_music_label_15</item>
+        <item>@string/pref_music_label_25</item>
+        <item>@string/pref_music_label_50</item>
     </string-array>
 
     <string-array name="pref_music_value">
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>25</item>
-        <item>50</item>
+        <item>@string/pref_music_label_5</item>
+        <item>@string/pref_music_label_10</item>
+        <item>@string/pref_music_label_15</item>
+        <item>@string/pref_music_label_25</item>
+        <item>@string/pref_music_label_50</item>
     </string-array>
 </resources>

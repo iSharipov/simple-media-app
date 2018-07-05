@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.isharipov.simplemediaapp.app.MediaApp;
 import com.isharipov.simplemediaapp.glide.GlideConfiguration;
+import com.isharipov.simplemediaapp.movie.di.MovieApiModule;
+import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
 import com.isharipov.simplemediaapp.music.di.MusicApiModule;
 import com.isharipov.simplemediaapp.music.repository.MusicRepository;
 import com.isharipov.simplemediaapp.music.repository.api.MusicApi;
@@ -36,6 +38,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         RepositoryModule.class,
         NewsApiModule.class,
         MusicApiModule.class,
+        MovieApiModule.class,
         FaviconFinderApiModule.class,
         ApplicationDbModule.class,
         AndroidSupportInjectionModule.class
@@ -47,6 +50,8 @@ public interface AppComponent extends AndroidInjector<MediaApp> {
     NewsApi provideNewsApiService();
 
     MusicApi provideMusicApiService();
+
+    MovieApi provideMovieApiService();
 
     NewsDao articleDao();
 
