@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindArray;
 import butterknife.BindString;
@@ -33,7 +34,7 @@ import dagger.android.support.DaggerFragment;
 /**
  * 13.06.2018.
  */
-public class CategoryFragment extends DaggerFragment implements CategoryContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class NewsCategoryFragment extends DaggerFragment implements CategoryContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String POSITION = "POSITION";
     private static final String PAGE = "PAGE";
@@ -43,6 +44,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     private String country;
     private CategoryAdapter categoryAdapter;
     @Inject
+    @Named("NewsCategory")
     CategoryContract.Presenter presenter;
     @BindView(R.id.category_recycler_layout)
     RecyclerView categoryRecyclerLayout;
@@ -61,13 +63,13 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
 
 
     @Inject
-    public CategoryFragment() {
+    public NewsCategoryFragment() {
 
     }
 
-    public static CategoryFragment newInstance(int position) {
+    public static NewsCategoryFragment newInstance(int position) {
         Bundle args = new Bundle();
-        CategoryFragment fragment = new CategoryFragment();
+        NewsCategoryFragment fragment = new NewsCategoryFragment();
         args.putInt(POSITION, position);
         fragment.setArguments(args);
         return fragment;
@@ -91,7 +93,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
         }
         categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
         categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page));
+            presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page));
         });
     }
 
@@ -126,7 +128,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
         initCountryParam();
         categoryAdapter.clearArticles();
         presenter.attachView(this);
-        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
+        presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
 
     @Override
@@ -161,11 +163,6 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     }
 
     @Override
-    public void showContent() {
-        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
-    }
-
-    @Override
     public void showProgress() {
         inAnimation = new AlphaAnimation(0f, 1f);
         inAnimation.setDuration(200);
@@ -186,7 +183,7 @@ public class CategoryFragment extends DaggerFragment implements CategoryContract
     public void onRefresh() {
         page = 1;
         categoryAdapter.clearArticles();
-        presenter.loadArticlesFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
+        presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
     }
 
     @Override

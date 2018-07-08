@@ -11,8 +11,6 @@ public interface CategoryContract {
 
     interface View extends BaseView<CategoryContract.Presenter> {
 
-        void showContent();
-
         void showProgress();
 
         void hideProgress();
@@ -24,6 +22,6 @@ public interface CategoryContract {
     }
 
     interface Presenter extends BasePresenter<CategoryContract.View> {
-        void loadArticlesFromApi(QueryParam queryParam);
+        void loadFromApi(QueryParam queryParam);
     }
 }

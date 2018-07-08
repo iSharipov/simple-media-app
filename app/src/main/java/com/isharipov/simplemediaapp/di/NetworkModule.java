@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 24.05.2018.
  */
 @Module
-public class NetworkModule {
+class NetworkModule {
 
     @Singleton
     @Provides

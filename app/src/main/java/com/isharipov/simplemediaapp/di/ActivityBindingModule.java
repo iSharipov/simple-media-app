@@ -1,6 +1,9 @@
 package com.isharipov.simplemediaapp.di;
 
 import com.isharipov.simplemediaapp.MainActivity;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryPresenter;
+import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicActivity;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
@@ -10,18 +13,20 @@ import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 import com.isharipov.simplemediaapp.news.preference.PreferenceNewsFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
-import com.isharipov.simplemediaapp.news.ui.news.category.CategoryFragment;
-import com.isharipov.simplemediaapp.news.ui.news.category.CategoryPresenter;
+import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryFragment;
+import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryPresenter;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingContract;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingPresenter;
+
+import javax.inject.Named;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class ActivityBindingModule {
+abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract MainActivity mainActivity();
@@ -36,7 +41,7 @@ public abstract class ActivityBindingModule {
     abstract NewsFragment newsFragment();
 
     @ContributesAndroidInjector
-    abstract CategoryFragment categoryFragment();
+    abstract NewsCategoryFragment categoryFragment();
 
     @ContributesAndroidInjector
     abstract EverythingFragment everythingFragment();
@@ -48,7 +53,12 @@ public abstract class ActivityBindingModule {
     abstract PreferenceMusicFragment preferenceMusicFragment();
 
     @Binds
-    abstract CategoryContract.Presenter categoryPresenter(CategoryPresenter presenter);
+    @Named("NewsCategory")
+    abstract CategoryContract.Presenter newsCategoryPresenter(NewsCategoryPresenter presenter);
+
+    @Binds
+    @Named("MovieCategory")
+    abstract CategoryContract.Presenter movieCategoryPresenter(MovieCategoryPresenter presenter);
 
     @Binds
     abstract EverythingContract.Presenter everythingPresenter(EverythingPresenter presenter);
@@ -61,4 +71,10 @@ public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract TracksFragment tracksFragment();
+
+    @ContributesAndroidInjector
+    abstract MovieFragment movieFragment();
+
+    @ContributesAndroidInjector
+    abstract MovieCategoryFragment movieCategoryFragment();
 }

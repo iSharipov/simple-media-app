@@ -20,14 +20,14 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 12.06.2018.
  */
-public class CategoryPresenter implements CategoryContract.Presenter {
+public class NewsCategoryPresenter implements CategoryContract.Presenter {
 
     private CategoryContract.View view;
     private final NewsRepository newsRepository;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
-    CategoryPresenter(NewsRepository newsRepository, CompositeDisposable compositeDisposable) {
+    NewsCategoryPresenter(NewsRepository newsRepository, CompositeDisposable compositeDisposable) {
         this.newsRepository = newsRepository;
         this.compositeDisposable = compositeDisposable;
     }
@@ -50,7 +50,8 @@ public class CategoryPresenter implements CategoryContract.Presenter {
 
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
-    public void loadArticlesFromApi(QueryParam queryParam) {
+    public void
+    loadFromApi(QueryParam queryParam) {
         view.showProgress();
         QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
         Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesByCategoryFromApi(queryCategoryParam);

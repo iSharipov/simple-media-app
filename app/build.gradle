@@ -19,6 +19,7 @@ android {
     buildTypes.each {
         it.buildConfigField "String", "NEWS_API_KEY", NEWS_API_KEY
         it.buildConfigField "String", "LASTFM_API_KEY", LASTFM_API_KEY
+        it.buildConfigField "String", "THEMOVIE_DB_API_KEY", THEMOVIE_DB_API_KEY
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

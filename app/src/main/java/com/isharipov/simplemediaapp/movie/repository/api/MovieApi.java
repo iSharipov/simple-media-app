@@ -15,14 +15,18 @@ import retrofit2.http.Query;
  */
 public interface MovieApi {
     String API_KEY = "api_key";
-    String SORT_TYPE = "sort_type";
+    String CATEGORY = "category";
     String ID = "id";
+    String LANGUAGE = "language";
 
     @GET("/3/movie/{id}")
     Observable<Movie> getMovieById(@Path(ID) Long id, @Query(API_KEY) String apiKey);
 
-    @GET("/3/movie/{sort_type}")
-    Observable<MovieResponse> getMoviesBySortType(@Path(SORT_TYPE) String sortType, @Query(API_KEY) String apiKey);
+    @GET("/3/movie/{category}")
+    Observable<MovieResponse> getMoviesByCategory(
+            @Path(CATEGORY) String category,
+            @Query("language") String language,
+            @Query(API_KEY) String apiKey);
 
     @GET("/3/movie/{id}/videos")
     Observable<TrailerResponse> getMovieTrailers(@Path(ID) String id, @Query(API_KEY) String apiKey);

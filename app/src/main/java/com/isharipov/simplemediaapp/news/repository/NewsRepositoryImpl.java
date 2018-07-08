@@ -71,7 +71,6 @@ public class NewsRepositoryImpl implements NewsRepository {
                             BuildConfig.NEWS_API_KEY,
                             param.getPageSize());
                 });
-
     }
 
     @Override

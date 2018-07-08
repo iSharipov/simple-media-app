@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.ui;
+package com.isharipov.simplemediaapp.movie.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -7,33 +7,29 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryFragment;
-import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
 
 /**
  * 12.06.2018.
  */
-public class NewsTabsPagerAdapter extends FragmentPagerAdapter {
+public class MovieTabsPagerAdapter extends FragmentPagerAdapter {
 
     private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
-    private final String[] categoryTabLabel;
+    private final String[] movieTabLabel;
 
-    public NewsTabsPagerAdapter(FragmentManager fragmentManager, String[] categoryTabLabel) {
+    public MovieTabsPagerAdapter(FragmentManager fragmentManager, String[] movieTabLabel) {
         super(fragmentManager);
-        this.categoryTabLabel = categoryTabLabel;
+        this.movieTabLabel = movieTabLabel;
     }
 
     @Override
     public int getCount() {
-        return categoryTabLabel.length;
+        return movieTabLabel.length;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return EverythingFragment.newInstance(position);
-        }
-        return NewsCategoryFragment.newInstance(position);
+        return MovieCategoryFragment.newInstance(position);
     }
 
     @NonNull
@@ -52,7 +48,7 @@ public class NewsTabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return categoryTabLabel[position];
+        return movieTabLabel[position];
     }
 
     public Fragment getRegisteredFragment(int position) {

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 
@@ -46,7 +47,7 @@ public class MainActivity extends DaggerAppCompatActivity implements BottomNavig
             case R.id.navigation_news:
                 return openFragment(NewsFragment.newInstance());
             case R.id.navigation_movies:
-                return true;
+                return openFragment(MovieFragment.newInstance());
         }
         return false;
     }

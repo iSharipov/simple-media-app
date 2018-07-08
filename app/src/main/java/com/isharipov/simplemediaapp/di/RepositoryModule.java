@@ -1,5 +1,8 @@
-package com.isharipov.simplemediaapp.news.di;
+package com.isharipov.simplemediaapp.di;
 
+import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
+import com.isharipov.simplemediaapp.movie.repository.MovieRepositoryImpl;
+import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
 import com.isharipov.simplemediaapp.music.repository.MusicRepository;
 import com.isharipov.simplemediaapp.music.repository.MusicRepositoryImpl;
 import com.isharipov.simplemediaapp.music.repository.api.MusicApi;
@@ -19,7 +22,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * 13.06.2018.
  */
 @Module
-public class RepositoryModule {
+class RepositoryModule {
 
     @Provides
     @Singleton
@@ -31,5 +34,11 @@ public class RepositoryModule {
     @Singleton
     MusicRepository provideMusicRepository(MusicApi musicApi, MusicDao musicDao, CompositeDisposable compositeDisposable) {
         return new MusicRepositoryImpl(musicApi, musicDao, compositeDisposable);
+    }
+
+    @Provides
+    @Singleton
+    MovieRepository provideMovieRepository(MovieApi movieApi) {
+        return new MovieRepositoryImpl(movieApi);
     }
 }

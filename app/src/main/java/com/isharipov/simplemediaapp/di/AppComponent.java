@@ -5,6 +5,7 @@ import android.app.Application;
 import com.isharipov.simplemediaapp.app.MediaApp;
 import com.isharipov.simplemediaapp.glide.GlideConfiguration;
 import com.isharipov.simplemediaapp.movie.di.MovieApiModule;
+import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
 import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
 import com.isharipov.simplemediaapp.music.di.MusicApiModule;
 import com.isharipov.simplemediaapp.music.repository.MusicRepository;
@@ -12,7 +13,6 @@ import com.isharipov.simplemediaapp.music.repository.api.MusicApi;
 import com.isharipov.simplemediaapp.news.di.ApplicationDbModule;
 import com.isharipov.simplemediaapp.news.di.FaviconFinderApiModule;
 import com.isharipov.simplemediaapp.news.di.NewsApiModule;
-import com.isharipov.simplemediaapp.news.di.RepositoryModule;
 import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
 import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
@@ -60,6 +60,8 @@ public interface AppComponent extends AndroidInjector<MediaApp> {
     NewsRepository newsRepository();
 
     MusicRepository musicRepository();
+
+    MovieRepository movieRepository();
 
     @Component.Builder
     interface Builder {
