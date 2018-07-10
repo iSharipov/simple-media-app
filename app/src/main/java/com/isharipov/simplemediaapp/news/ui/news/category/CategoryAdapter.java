@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.glide.GlideApp;
 import com.isharipov.simplemediaapp.news.model.Article;
+import com.isharipov.simplemediaapp.ui.OnLoadMoreListener;
 
 import java.util.List;
 

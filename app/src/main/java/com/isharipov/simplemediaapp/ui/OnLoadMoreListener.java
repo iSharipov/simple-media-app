@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp.news.ui.news.category;
+package com.isharipov.simplemediaapp.ui;
 
 /**
  * 18.06.2018.

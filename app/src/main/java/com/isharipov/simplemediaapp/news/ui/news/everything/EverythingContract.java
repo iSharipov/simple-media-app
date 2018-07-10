@@ -8,7 +8,7 @@ import com.isharipov.simplemediaapp.news.model.QueryParam;
  * 22.06.2018.
  */
 public interface EverythingContract {
-    interface View extends BaseView<EverythingContract.Presenter> {
+    interface View<T> extends BaseView<EverythingContract.Presenter, T> {
 
         void showContent();
 

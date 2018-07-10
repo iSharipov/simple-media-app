@@ -34,7 +34,7 @@ import dagger.android.support.DaggerFragment;
 /**
  * 22.06.2018.
  */
-public class EverythingFragment extends DaggerFragment implements EverythingContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class EverythingFragment extends DaggerFragment implements EverythingContract.View<Article>, SwipeRefreshLayout.OnRefreshListener {
     private static final String POSITION = "POSITION";
     private static final String PAGE = "PAGE";
 

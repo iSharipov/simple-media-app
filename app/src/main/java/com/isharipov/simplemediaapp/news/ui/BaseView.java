@@ -1,12 +1,10 @@
 package com.isharipov.simplemediaapp.news.ui;
 
-import com.isharipov.simplemediaapp.news.model.Article;
-
 import java.util.List;
 
 /**
  * 12.06.2018.
  */
-public interface BaseView<P> {
-    void setData(List<Article> articles);
+public interface BaseView<P, T> {
+    void setData(List<T> articles);
 }

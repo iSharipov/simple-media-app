@@ -7,9 +7,9 @@ import com.isharipov.simplemediaapp.news.ui.BaseView;
 /**
  * 12.06.2018.
  */
-public interface CategoryContract {
+public interface CategoryContract<T> {
 
-    interface View extends BaseView<CategoryContract.Presenter> {
+    interface View<T> extends BaseView<CategoryContract.Presenter, T> {
 
         void showProgress();
 

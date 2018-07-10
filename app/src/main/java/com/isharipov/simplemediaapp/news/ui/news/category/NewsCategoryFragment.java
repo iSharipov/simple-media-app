@@ -34,7 +34,7 @@ import dagger.android.support.DaggerFragment;
 /**
  * 13.06.2018.
  */
-public class NewsCategoryFragment extends DaggerFragment implements CategoryContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class NewsCategoryFragment extends DaggerFragment implements CategoryContract.View<Article>, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String POSITION = "POSITION";
     private static final String PAGE = "PAGE";

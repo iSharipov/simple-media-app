@@ -28,10 +28,16 @@
     </string-array>
 
     <string-array name="movie_tab_label">
-        <item>Latest</item>
         <item>Now Playing</item>
         <item>Popular</item>
         <item>Top Rated</item>
         <item>Upcoming</item>
+    </string-array>
+
+    <string-array name="movie_query_param">
+        <item>now_playing</item>
+        <item>popular</item>
+        <item>top_rated</item>
+        <item>upcoming</item>
     </string-array>
 </resources>
