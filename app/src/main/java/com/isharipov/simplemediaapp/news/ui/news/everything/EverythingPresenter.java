@@ -63,25 +63,34 @@ public class EverythingPresenter implements EverythingContract.Presenter {
 
                     @Override
                     public void onNext(ArticleResponse articleResponse) {
-                        List<Article> articles = articleResponse.getArticles();
-                        view.setData(articles);
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
-                        newsRepository.storeArticlesInDb(articles);
+                        if (view != null) {
+                            List<Article> articles = articleResponse.getArticles();
+                            view.setData(articles);
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                            for (Article article : articles) {
+                                article.setCategory("everything");
+                            }
+                            newsRepository.storeArticlesInDb(articles);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                        }
                     }
                 });
     }

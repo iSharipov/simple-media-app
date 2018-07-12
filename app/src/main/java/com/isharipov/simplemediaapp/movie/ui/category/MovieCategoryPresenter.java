@@ -1,11 +1,11 @@
 package com.isharipov.simplemediaapp.movie.ui.category;
 
+import com.isharipov.simplemediaapp.movie.model.Genre;
+import com.isharipov.simplemediaapp.movie.model.GenreResponse;
 import com.isharipov.simplemediaapp.movie.model.Movie;
 import com.isharipov.simplemediaapp.movie.model.MovieResponse;
 import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
-import com.isharipov.simplemediaapp.news.model.Article;
-import com.isharipov.simplemediaapp.news.model.ArticleResponse;
-import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
+import com.isharipov.simplemediaapp.movie.util.QueryMovieParam;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
 
@@ -38,9 +38,62 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
     @Override
     public void loadFromApi(QueryParam queryParam) {
         view.showProgress();
-        QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
-        Observable<MovieResponse> moviesFromApi = movieRepository.getMoviesByCategoryFromApi(queryCategoryParam);
-        moviesFromApi.subscribeOn(Schedulers.io())
+        QueryMovieParam queryMovieParam = (QueryMovieParam) queryParam;
+        Observable<MovieResponse> moviesFromApi = movieRepository.getMoviesByCategoryFromApi(queryMovieParam);
+        Observable<GenreResponse> genresFromApi = movieRepository.getGenresFromApi(queryMovieParam.getLanguage());
+        Observable<MovieResponse> combined = Observable.zip(moviesFromApi, genresFromApi, (movieResponse, genreResponse) -> {
+            List<Movie> movies = movieResponse.getResults();
+            for (Movie movie : movies) {
+                List<Long> genreIds = movie.getGenreIds();
+                List<Genre> genres = genreResponse.getGenres();
+                for (Long genreId : genreIds) {
+                    for (Genre genre : genres) {
+                        genre.setLanguage(queryMovieParam.getLanguage());
+                        if (genreId.equals(genre.getGenreId())) {
+                            movie.getGenres().add(genre.getName());
+                        }
+                    }
+                    movieRepository.storeGenresInDb(genres);
+                }
+            }
+            movieRepository.storeMoviesInDb(movies);
+            return movieResponse;
+        });
+        combined.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<MovieResponse>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                compositeDisposable.add(d);
+            }
+
+            @Override
+            public void onNext(MovieResponse movieResponse) {
+                if (view != null) {
+                    List<Movie> movies = movieResponse.getResults();
+                    view.setData(movies);
+                    view.hideProgress();
+                    view.setMoreLoaded(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (view != null) {
+                    view.onItemsLoadComplete();
+                    view.hideProgress();
+                    view.setMoreLoaded(false);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                if (view != null) {
+                    view.onItemsLoadComplete();
+                    view.hideProgress();
+                    view.setMoreLoaded(false);
+                }
+            }
+        });
+       /* moviesFromApi.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MovieResponse>() {
                     @Override
@@ -74,6 +127,8 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
                         view.setMoreLoaded(false);
                     }
                 });
+
+    */
     }
 
     @Override

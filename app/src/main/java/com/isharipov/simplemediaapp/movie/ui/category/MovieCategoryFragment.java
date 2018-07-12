@@ -16,9 +16,9 @@ import android.widget.FrameLayout;
 
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.movie.model.Movie;
-import com.isharipov.simplemediaapp.news.model.Article;
-import com.isharipov.simplemediaapp.news.model.QueryCategoryParam;
+import com.isharipov.simplemediaapp.movie.util.QueryMovieParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
+import com.isharipov.simplemediaapp.util.CountryLanguageWrapper;
 import com.isharipov.simplemediaapp.util.PrefUtils;
 
 import java.util.ArrayList;
@@ -42,7 +42,8 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     private static final String POSITION = "POSITION";
     private int position;
     private int page = 1;
-    private String country;
+    private String region;
+    private String language;
     private MovieAdapter movieAdapter;
     @BindView(R.id.movie_refresh_layout)
     SwipeRefreshLayout categoryRefreshLayout;
@@ -54,8 +55,12 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     String[] categoryQueryParam;
     @BindArray(R.array.pref_country_value)
     String[] prefCountryValue;
-    @BindString(R.string.pref_news_key)
-    String prefNewsKey;
+    @BindArray(R.array.pref_language_value)
+    String[] prefLanguageValue;
+    @BindString(R.string.pref_movie_region_key)
+    String prefMovieRegionKey;
+    @BindString(R.string.pref_movie_language_key)
+    String prefMovieLanguageKey;
     @Inject
     @Named("MovieCategory")
     CategoryContract.Presenter presenter;
@@ -88,7 +93,7 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
         movieAdapter = new MovieAdapter(
                 new ArrayList<>(0),
                 null,
-                () -> presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page)));
+                () -> presenter.loadFromApi(new QueryMovieParam(region, categoryQueryParam[position], ++page, language)));
     }
 
     @Nullable
@@ -109,19 +114,21 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     @Override
     public void onResume() {
         super.onResume();
-        initCountryParam();
+        initRegionAndLanguageParam();
         movieAdapter.clearMovies();
         presenter.attachView(this);
-        presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
+        presenter.loadFromApi(new QueryMovieParam(region, categoryQueryParam[position], page, language));
     }
 
-    private void initCountryParam() {
+    private void initRegionAndLanguageParam() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        if (preferences.contains(prefNewsKey)) {
-            country = preferences.getString(prefNewsKey, "en");
+        if (preferences.contains(prefMovieRegionKey)) {
+            region = preferences.getString(prefMovieRegionKey, "en");
+            language = preferences.getString(prefMovieLanguageKey, "en");
         } else {
-            country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
-            preferences.edit().putString(prefNewsKey, country).apply();
+            CountryLanguageWrapper fromLocale = PrefUtils.getDefaultCountryFromLocale(prefCountryValue, prefLanguageValue);
+            preferences.edit().putString(prefMovieRegionKey, region = fromLocale.getCountry()).apply();
+            preferences.edit().putString(prefMovieLanguageKey, language = fromLocale.getLanguage()).apply();
         }
     }
 
@@ -177,7 +184,7 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     public void onRefresh() {
         page = 1;
         movieAdapter.clearMovies();
-        presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], page));
+        presenter.loadFromApi(new QueryMovieParam(region, categoryQueryParam[position], page, language));
     }
 
     @Override

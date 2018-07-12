@@ -111,7 +111,7 @@ public class NewsCategoryFragment extends DaggerFragment implements CategoryCont
         if (preferences.contains(prefNewsKey)) {
             country = preferences.getString(prefNewsKey, "en");
         } else {
-            country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue);
+            country = PrefUtils.getDefaultCountryFromLocale(prefCountryValue, null).getCountry();
             preferences.edit().putString(prefNewsKey, country).apply();
         }
     }

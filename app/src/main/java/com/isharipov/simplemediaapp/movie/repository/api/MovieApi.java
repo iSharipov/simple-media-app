@@ -1,5 +1,6 @@
 package com.isharipov.simplemediaapp.movie.repository.api;
 
+import com.isharipov.simplemediaapp.movie.model.GenreResponse;
 import com.isharipov.simplemediaapp.movie.model.Movie;
 import com.isharipov.simplemediaapp.movie.model.MovieResponse;
 import com.isharipov.simplemediaapp.movie.model.ReviewResponse;
@@ -18,6 +19,7 @@ public interface MovieApi {
     String CATEGORY = "category";
     String ID = "id";
     String LANGUAGE = "language";
+    String REGION = "region";
 
     @GET("/3/movie/{id}")
     Observable<Movie> getMovieById(@Path(ID) Long id, @Query(API_KEY) String apiKey);
@@ -25,7 +27,8 @@ public interface MovieApi {
     @GET("/3/movie/{category}")
     Observable<MovieResponse> getMoviesByCategory(
             @Path(CATEGORY) String category,
-            @Query("language") String language,
+            @Query(LANGUAGE) String region,
+            @Query(REGION) String language,
             @Query(API_KEY) String apiKey);
 
     @GET("/3/movie/{id}/videos")
@@ -33,4 +36,7 @@ public interface MovieApi {
 
     @GET("/3/movie/{id}/reviews")
     Observable<ReviewResponse> getMovieReviews(@Path(ID) String id, @Query(API_KEY) String apiKey);
+
+    @GET("/3/genre/movie/list")
+    Observable<GenreResponse> getGenres(@Query(LANGUAGE) String language, @Query(API_KEY) String apiKey);
 }

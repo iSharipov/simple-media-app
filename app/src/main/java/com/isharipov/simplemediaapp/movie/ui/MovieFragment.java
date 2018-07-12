@@ -9,10 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
+import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 
 import java.util.Objects;
 
@@ -61,6 +65,29 @@ public class MovieFragment extends DaggerFragment {
         initTabPagerAdapter();
         initTabLayout();
         return root;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.movie_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.movie_menu:
+                PreferenceNewsActivity.start(getActivity());
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @SuppressLint("RestrictedApi")

@@ -12,13 +12,22 @@ public final class PrefUtils {
 
     }
 
-    public static String getDefaultCountryFromLocale(String[] prefCountryValues) {
-        List<String> listValues = Arrays.asList(prefCountryValues);
+    public static CountryLanguageWrapper getDefaultCountryFromLocale(String[] prefCountryValues, String[] prefLanguageValues) {
         Locale defaultLocale = Locale.getDefault();
         String country = defaultLocale.getCountry();
-        if (country != null && listValues.contains(country.toLowerCase())) {
-            return country.toLowerCase();
+        List<String> countryValues = Arrays.asList(prefCountryValues != null ? prefCountryValues : new String[0]);
+        if (country != null && countryValues.contains(country.toLowerCase())) {
+            country = country.toLowerCase();
+        } else {
+            country = "en";
         }
-        return "en";
+        List<String> languageValues = Arrays.asList(prefLanguageValues != null ? prefLanguageValues : new String[0]);
+        String language = defaultLocale.getLanguage();
+        if (language != null && languageValues.contains(language.toLowerCase())) {
+            language = language.toLowerCase();
+        } else {
+            language = "en";
+        }
+        return new CountryLanguageWrapper(country, language);
     }
 }

@@ -3,19 +3,20 @@ package com.isharipov.simplemediaapp.di;
 import android.app.Application;
 
 import com.isharipov.simplemediaapp.app.MediaApp;
+import com.isharipov.simplemediaapp.db.AppDatabase;
 import com.isharipov.simplemediaapp.glide.GlideConfiguration;
 import com.isharipov.simplemediaapp.movie.di.MovieApiModule;
 import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
 import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
+import com.isharipov.simplemediaapp.movie.repository.db.MovieDao;
 import com.isharipov.simplemediaapp.music.di.MusicApiModule;
 import com.isharipov.simplemediaapp.music.repository.MusicRepository;
 import com.isharipov.simplemediaapp.music.repository.api.MusicApi;
-import com.isharipov.simplemediaapp.news.di.ApplicationDbModule;
+import com.isharipov.simplemediaapp.music.repository.db.MusicDao;
 import com.isharipov.simplemediaapp.news.di.FaviconFinderApiModule;
 import com.isharipov.simplemediaapp.news.di.NewsApiModule;
 import com.isharipov.simplemediaapp.news.repository.NewsRepository;
 import com.isharipov.simplemediaapp.news.repository.api.NewsApi;
-import com.isharipov.simplemediaapp.news.repository.db.AppDatabase;
 import com.isharipov.simplemediaapp.news.repository.db.NewsDao;
 import com.isharipov.simplemediaapp.rx.RxModule;
 
@@ -54,6 +55,10 @@ public interface AppComponent extends AndroidInjector<MediaApp> {
     MovieApi provideMovieApiService();
 
     NewsDao articleDao();
+
+    MusicDao musicDao();
+
+    MovieDao movieDao();
 
     AppDatabase appDatabase();
 

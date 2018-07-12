@@ -8,122 +8,53 @@
     <string name="prefs_title">Preference</string>
     <string name="pref_news_label">News</string>
     <string name="pref_music_label">Music</string>
+    <string name="pref_movie_label">Movie</string>
+    <string name="pref_language_label">Language</string>
     <string name="pref_news_key" translatable="false">pref_newsCategoryPiece</string>
     <string name="pref_music_key" translatable="false">pref_musicPiece</string>
+    <string name="pref_movie_region_key" translatable="false">pref_movieRegionPiece</string>
+    <string name="pref_movie_language_key" translatable="false">pref_movieLanguagePiece</string>
 
-    <string name="pref_country_label_ar">Argentina</string>
-    <string name="pref_country_label_au">Australia</string>
-    <string name="pref_country_label_at">Austria</string>
-    <string name="pref_country_label_be">Belgium</string>
-    <string name="pref_country_label_br">Brazil</string>
-    <string name="pref_country_label_bg">Bulgaria</string>
-    <string name="pref_country_label_ca">Canada</string>
-    <string name="pref_country_label_cn">China</string>
-    <string name="pref_country_label_co">Colombia</string>
-    <string name="pref_country_label_cu">Cuba</string>
-    <string name="pref_country_label_cz">Czech Republic</string>
     <string name="pref_country_label_eg">Egypt</string>
     <string name="pref_country_label_fr">France</string>
     <string name="pref_country_label_de">Germany</string>
-    <string name="pref_country_label_gr">Greece</string>
-    <string name="pref_country_label_hk">Hong Kong</string>
-    <string name="pref_country_label_hu">Hungary</string>
-    <string name="pref_country_label_in">India</string>
-    <string name="pref_country_label_id">Indonesia</string>
-    <string name="pref_country_label_ie">Ireland</string>
-    <string name="pref_country_label_il">Israel</string>
     <string name="pref_country_label_it">Italy</string>
-    <string name="pref_country_label_jp">Japan</string>
-    <string name="pref_country_label_lv">Latvia</string>
-    <string name="pref_country_label_lt">Lithuania</string>
-    <string name="pref_country_label_my">Malaysia</string>
-    <string name="pref_country_label_mx">Mexico</string>
-    <string name="pref_country_label_ma">Morocco</string>
-    <string name="pref_country_label_nl">Netherlands</string>
-    <string name="pref_country_label_nz">New Zealand</string>
-    <string name="pref_country_label_ng">Nigeria</string>
-    <string name="pref_country_label_no">Norway</string>
-    <string name="pref_country_label_ph">Philippines</string>
-    <string name="pref_country_label_pl">Poland</string>
-    <string name="pref_country_label_pt">Portugal</string>
-    <string name="pref_country_label_ro">Romania</string>
     <string name="pref_country_label_ru">Russia</string>
     <string name="pref_country_label_sa">Saudi Arabia</string>
-    <string name="pref_country_label_rs">Serbia</string>
-    <string name="pref_country_label_sg">Singapore</string>
-    <string name="pref_country_label_sk">Slovakia</string>
-    <string name="pref_country_label_si">Slovenia</string>
-    <string name="pref_country_label_za">South Africa</string>
-    <string name="pref_country_label_kr">South Korea</string>
-    <string name="pref_country_label_se">Sweden</string>
-    <string name="pref_country_label_ch">Switzerland</string>
-    <string name="pref_country_label_tw">Taiwan</string>
-    <string name="pref_country_label_th">Thailand</string>
-    <string name="pref_country_label_tr">Turkey</string>
     <string name="pref_country_label_uae">UAE</string>
-    <string name="pref_country_label_ua">Ukraine</string>
     <string name="pref_country_label_gb">United Kingdom</string>
     <string name="pref_country_label_us">United States</string>
-    <string name="pref_country_label_ve">Venuzuela</string>
 
-    <string name="pref_country_value_ar" translatable="false">ar</string>
-    <string name="pref_country_value_au" translatable="false">au</string>
-    <string name="pref_country_value_at" translatable="false">at</string>
-    <string name="pref_country_value_be" translatable="false">be</string>
-    <string name="pref_country_value_br" translatable="false">br</string>
-    <string name="pref_country_value_bg" translatable="false">bg</string>
-    <string name="pref_country_value_ca" translatable="false">ca</string>
-    <string name="pref_country_value_cn" translatable="false">cn</string>
-    <string name="pref_country_value_co" translatable="false">co</string>
-    <string name="pref_country_value_cu" translatable="false">cu</string>
-    <string name="pref_country_value_cz" translatable="false">cz</string>
     <string name="pref_country_value_eg" translatable="false">eg</string>
     <string name="pref_country_value_fr" translatable="false">fr</string>
     <string name="pref_country_value_de" translatable="false">de</string>
-    <string name="pref_country_value_gr" translatable="false">gr</string>
-    <string name="pref_country_value_hk" translatable="false">hk</string>
-    <string name="pref_country_value_hu" translatable="false">hu</string>
-    <string name="pref_country_value_in" translatable="false">in</string>
-    <string name="pref_country_value_id" translatable="false">id</string>
-    <string name="pref_country_value_ie" translatable="false">ie</string>
-    <string name="pref_country_value_il" translatable="false">il</string>
     <string name="pref_country_value_it" translatable="false">it</string>
-    <string name="pref_country_value_jp" translatable="false">jp</string>
-    <string name="pref_country_value_lv" translatable="false">lv</string>
-    <string name="pref_country_value_lt" translatable="false">lt</string>
-    <string name="pref_country_value_my" translatable="false">my</string>
-    <string name="pref_country_value_mx" translatable="false">mx</string>
-    <string name="pref_country_value_ma" translatable="false">ma</string>
-    <string name="pref_country_value_nl" translatable="false">nl</string>
-    <string name="pref_country_value_nz" translatable="false">nz</string>
-    <string name="pref_country_value_ng" translatable="false">ng</string>
-    <string name="pref_country_value_no" translatable="false">no</string>
-    <string name="pref_country_value_ph" translatable="false">ph</string>
-    <string name="pref_country_value_pl" translatable="false">pl</string>
-    <string name="pref_country_value_pt" translatable="false">pt</string>
-    <string name="pref_country_value_ro" translatable="false">ro</string>
     <string name="pref_country_value_ru" translatable="false">ru</string>
     <string name="pref_country_value_sa" translatable="false">sa</string>
-    <string name="pref_country_value_rs" translatable="false">rs</string>
-    <string name="pref_country_value_sg" translatable="false">sg</string>
-    <string name="pref_country_value_sk" translatable="false">sk</string>
-    <string name="pref_country_value_si" translatable="false">si</string>
-    <string name="pref_country_value_za" translatable="false">za</string>
-    <string name="pref_country_value_kr" translatable="false">kr</string>
-    <string name="pref_country_value_se" translatable="false">se</string>
-    <string name="pref_country_value_ch" translatable="false">ch</string>
-    <string name="pref_country_value_tw" translatable="false">tw</string>
-    <string name="pref_country_value_th" translatable="false">th</string>
-    <string name="pref_country_value_tr" translatable="false">tr</string>
-    <string name="pref_country_value_ua" translatable="false">ua</string>
     <string name="pref_country_value_uae" translatable="false">uae</string>
     <string name="pref_country_value_gb" translatable="false">gb</string>
     <string name="pref_country_value_us" translatable="false">us</string>
-    <string name="pref_country_value_ve" translatable="false">ve</string>
 
     <string name="pref_music_label_5" translatable="false">5</string>
     <string name="pref_music_label_10" translatable="false">10</string>
     <string name="pref_music_label_15" translatable="false">15</string>
     <string name="pref_music_label_25" translatable="false">25</string>
     <string name="pref_music_label_50" translatable="false">50</string>
+
+    <string name="pref_language_value_en" translatable="false">en</string>
+    <string name="pref_language_value_de" translatable="false">de</string>
+    <string name="pref_language_value_ru" translatable="false">ru</string>
+    <string name="pref_language_value_es" translatable="false">es</string>
+    <string name="pref_language_value_ar" translatable="false">ar</string>
+    <string name="pref_language_value_fr" translatable="false">fr</string>
+    <string name="pref_language_label_it" translatable="false">it</string>
+
+    <string name="pref_language_label_all">All</string>
+    <string name="pref_language_label_en">English</string>
+    <string name="pref_language_label_de">German</string>
+    <string name="pref_language_label_ru">Russian</string>
+    <string name="pref_language_label_es">Spanish</string>
+    <string name="pref_language_label_ar">Arabic</string>
+    <string name="pref_language_label_fr">French</string>
+    <string name="pref_language_value_it">Italian</string>
 </resources>

@@ -50,8 +50,7 @@ public class NewsCategoryPresenter implements CategoryContract.Presenter {
 
     // TODO: 15.06.2018 Реализовать работу с CompositeDisposable
     @Override
-    public void
-    loadFromApi(QueryParam queryParam) {
+    public void loadFromApi(QueryParam queryParam) {
         view.showProgress();
         QueryCategoryParam queryCategoryParam = (QueryCategoryParam) queryParam;
         Observable<ArticleResponse> articlesFromApi = newsRepository.getArticlesByCategoryFromApi(queryCategoryParam);
@@ -65,28 +64,34 @@ public class NewsCategoryPresenter implements CategoryContract.Presenter {
 
                     @Override
                     public void onNext(ArticleResponse articleResponse) {
-                        List<Article> articles = articleResponse.getArticles();
-                        view.setData(articles);
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
-                        for (Article article : articles) {
-                            article.setCategory(queryCategoryParam.getCategory());
+                        if (view != null) {
+                            List<Article> articles = articleResponse.getArticles();
+                            view.setData(articles);
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                            for (Article article : articles) {
+                                article.setCategory(queryCategoryParam.getCategory());
+                            }
+                            newsRepository.storeArticlesInDb(articles);
                         }
-                        newsRepository.storeArticlesInDb(articles);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                            view.setMoreLoaded(false);
+                        }
                     }
                 });
     }

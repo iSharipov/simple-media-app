@@ -3,6 +3,7 @@ package com.isharipov.simplemediaapp.di;
 import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
 import com.isharipov.simplemediaapp.movie.repository.MovieRepositoryImpl;
 import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
+import com.isharipov.simplemediaapp.movie.repository.db.MovieDao;
 import com.isharipov.simplemediaapp.music.repository.MusicRepository;
 import com.isharipov.simplemediaapp.music.repository.MusicRepositoryImpl;
 import com.isharipov.simplemediaapp.music.repository.api.MusicApi;
@@ -38,7 +39,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    MovieRepository provideMovieRepository(MovieApi movieApi) {
-        return new MovieRepositoryImpl(movieApi);
+    MovieRepository provideMovieRepository(MovieApi movieApi, MovieDao movieDao) {
+        return new MovieRepositoryImpl(movieApi, movieDao);
     }
 }

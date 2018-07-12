@@ -44,22 +44,28 @@ public class ArtistsPresenter extends MusicPresenter {
 
                     @Override
                     public void onNext(ArtistsResponse artistsResponse) {
-                        List<Artist> artists = artistsResponse.getArtists().getArtist();
-                        view.setData(artists);
-                        view.hideProgress();
-                        repository.storeArtistsInDb(artists);
+                        if (view != null) {
+                            List<Artist> artists = artistsResponse.getArtists().getArtist();
+                            view.setData(artists);
+                            view.hideProgress();
+                            repository.storeArtistsInDb(artists);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
+                        if (view != null) {
+                            view.onItemsLoadComplete();
+                            view.hideProgress();
+                        }
                     }
                 });
     }

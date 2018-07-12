@@ -1,17 +1,25 @@
 package com.isharipov.simplemediaapp.movie.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
 import com.google.gson.annotations.SerializedName;
+import com.isharipov.simplemediaapp.movie.util.GenreIdsTypeConverter;
+import com.isharipov.simplemediaapp.movie.util.GenreListTypeConverter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ilias on 18.02.2018.
  */
-
+@Entity(tableName = "movies")
 public class Movie implements Serializable {
     @SerializedName("vote_count")
     private Long voteCount;
+    @PrimaryKey
     private Long id;
     private Boolean video;
     @SerializedName("vote_average")
@@ -24,6 +32,7 @@ public class Movie implements Serializable {
     private String originalLanguage;
     @SerializedName("original_title")
     private String originalTitle;
+    @TypeConverters(GenreIdsTypeConverter.class)
     @SerializedName("genre_ids")
     private List<Long> genreIds;
     @SerializedName("backdrop_path")
@@ -32,6 +41,8 @@ public class Movie implements Serializable {
     private String overview;
     @SerializedName("release_date")
     private String releaseDate;
+    @TypeConverters(GenreListTypeConverter.class)
+    private List<String> genres = new ArrayList<>();
 
     public Long getVoteCount() {
         return voteCount;
@@ -143,5 +154,13 @@ public class Movie implements Serializable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 }

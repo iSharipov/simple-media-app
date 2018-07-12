@@ -20,8 +20,6 @@ public interface NewsRepository {
 
     Observable<ArticleResponse> getArticlesByCategoryFromDb(QueryCategoryParam queryParam);
 
-    Observable<ArticleResponse> getArticlesEverythingFromDb();
-
     void storeArticlesInDb(List<Article> articles);
 
     void storeSourcesInDb(List<Source> sources);

@@ -85,17 +85,6 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     @Override
-    public Observable<ArticleResponse> getArticlesEverythingFromDb() {
-        return newsDao.getArticlesWhereNoCategory()
-                .filter(articles -> !articles.isEmpty())
-                .map(articles -> {
-                    ArticleResponse articleResponse = new ArticleResponse();
-                    articleResponse.setArticles(articles);
-                    return articleResponse;
-                }).toObservable();
-    }
-
-    @Override
     public void storeArticlesInDb(List<Article> articles) {
         Completable.fromAction(() -> newsDao.insertArticles(articles))
                 .observeOn(AndroidSchedulers.mainThread())
