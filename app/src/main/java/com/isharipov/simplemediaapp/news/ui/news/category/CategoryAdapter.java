@@ -93,6 +93,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             GlideApp
                     .with(holder.itemView)
                     .load(article.getUrlToImage())
+                    .error(R.drawable.hf_news_thumbnail)
                     .into(normalViewHolder.articleImage);
         } else if (holder instanceof ProgressViewHolder) {
             ProgressViewHolder progressViewHolder = (ProgressViewHolder) holder;
