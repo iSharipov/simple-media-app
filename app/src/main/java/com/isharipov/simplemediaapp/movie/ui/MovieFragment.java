@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.isharipov.simplemediaapp.R;
+import com.isharipov.simplemediaapp.movie.preference.PreferenceMovieActivity;
 import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 
 import java.util.Objects;
@@ -84,7 +85,7 @@ public class MovieFragment extends DaggerFragment {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.movie_menu:
-                PreferenceNewsActivity.start(getActivity());
+                PreferenceMovieActivity.start(getActivity());
             default:
                 return super.onOptionsItemSelected(item);
         }

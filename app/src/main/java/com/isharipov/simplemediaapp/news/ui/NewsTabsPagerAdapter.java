@@ -1,21 +1,17 @@
 package com.isharipov.simplemediaapp.news.ui;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.SparseArray;
-import android.view.ViewGroup;
 
+import com.isharipov.simplemediaapp.PagerContract;
 import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryFragment;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 
 /**
  * 12.06.2018.
  */
-public class NewsTabsPagerAdapter extends FragmentPagerAdapter {
+public class NewsTabsPagerAdapter extends PagerContract {
 
-    private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private final String[] categoryTabLabel;
 
     public NewsTabsPagerAdapter(FragmentManager fragmentManager, String[] categoryTabLabel) {
@@ -36,26 +32,9 @@ public class NewsTabsPagerAdapter extends FragmentPagerAdapter {
         return NewsCategoryFragment.newInstance(position);
     }
 
-    @NonNull
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container, position);
-        registeredFragments.put(position, fragment);
-        return fragment;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        registeredFragments.remove(position);
-        super.destroyItem(container, position, object);
-    }
 
     @Override
     public CharSequence getPageTitle(int position) {
         return categoryTabLabel[position];
-    }
-
-    public Fragment getRegisteredFragment(int position) {
-        return registeredFragments.get(position);
     }
 }

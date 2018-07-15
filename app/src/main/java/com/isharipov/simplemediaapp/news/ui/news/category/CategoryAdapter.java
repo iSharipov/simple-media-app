@@ -31,13 +31,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_PROG = 0;
 
     private final List<Article> articles;
+    private final OnLoadMoreListener onLoadMoreListener;
+    private final ArticleClickListener clickListener;
     private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
-    private OnLoadMoreListener onLoadMoreListener;
 
-    public CategoryAdapter(List<Article> articles) {
+    public CategoryAdapter(List<Article> articles, OnLoadMoreListener onLoadMoreListener, ArticleClickListener clickListener) {
         this.articles = articles;
+        this.onLoadMoreListener = onLoadMoreListener;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -66,7 +69,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == VIEW_ITEM) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.news_article_item_row, parent, false);
-            vh = new ViewHolder(v);
+            vh = new ViewHolder(v, clickListener);
         } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.load_more_progressbar, parent, false);
@@ -84,6 +87,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Article article = articles.get(position);
             normalViewHolder.articleDescription.setText(article.getDescription());
             normalViewHolder.articleTitle.setText(article.getTitle());
+
+            holder.itemView.setOnClickListener(v -> clickListener.onClick(articles.get(holder.getAdapterPosition())));
 
             GlideApp
                     .with(holder.itemView)
@@ -115,7 +120,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @BindView(R.id.article_title)
         TextView articleTitle;
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, ArticleClickListener clickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -154,9 +159,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setLoaded(boolean loading) {
         this.loading = loading;
-    }
-
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
     }
 }

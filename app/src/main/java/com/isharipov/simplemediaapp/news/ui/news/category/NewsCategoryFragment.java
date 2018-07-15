@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.news.ui.news.category;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -91,10 +93,15 @@ public class NewsCategoryFragment extends DaggerFragment implements CategoryCont
             position = savedInstanceState.getInt(POSITION);
             page = savedInstanceState.getInt(PAGE);
         }
-        categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
-        categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page));
-        });
+        categoryAdapter = new CategoryAdapter(
+                new ArrayList<>(0),
+                () -> presenter.loadFromApi(new QueryCategoryParam(country, categoryQueryParam[position], ++page)),
+                article -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(article.getUrl()));
+                    NewsCategoryFragment.this.startActivity(i);
+                }
+        );
     }
 
     @Nullable

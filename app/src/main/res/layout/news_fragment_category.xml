@@ -22,8 +22,6 @@
         android:alpha="0.4"
         android:animateLayoutChanges="true"
         android:background="#000000"
-        android:clickable="true"
-        android:focusable="true"
         android:visibility="gone">
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar

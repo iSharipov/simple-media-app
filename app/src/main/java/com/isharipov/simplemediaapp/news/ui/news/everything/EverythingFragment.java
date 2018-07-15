@@ -1,6 +1,8 @@
 package com.isharipov.simplemediaapp.news.ui.news.everything;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -84,10 +86,14 @@ public class EverythingFragment extends DaggerFragment implements EverythingCont
             position = savedInstanceState.getInt(POSITION);
             page = savedInstanceState.getInt(PAGE);
         }
-        categoryAdapter = new CategoryAdapter(new ArrayList<>(0));
-        categoryAdapter.setOnLoadMoreListener(() -> {
-            presenter.loadArticlesFromApi(new QueryEverythingParam(country, ++page));
-        });
+        categoryAdapter = new CategoryAdapter(
+                new ArrayList<>(0),
+                () -> presenter.loadArticlesFromApi(new QueryEverythingParam(country, ++page)),
+                article -> {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(article.getUrl()));
+                    EverythingFragment.this.startActivity(i);
+                });
     }
 
     @Nullable

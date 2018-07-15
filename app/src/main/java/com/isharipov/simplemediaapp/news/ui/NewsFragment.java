@@ -15,8 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
+import com.isharipov.simplemediaapp.PagerContract;
 import com.isharipov.simplemediaapp.R;
+import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 
 import java.util.Objects;
 
@@ -43,6 +44,7 @@ public class NewsFragment extends DaggerFragment {
     Toolbar toolbar;
     @BindString(R.string.title_news)
     String titleNews;
+    PagerContract pagerContract;
 
     public static NewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -120,7 +122,8 @@ public class NewsFragment extends DaggerFragment {
     }
 
     private void initTabPagerAdapter() {
-        viewPager.setAdapter(new NewsTabsPagerAdapter(getChildFragmentManager(), categoryTabLabel));
+        pagerContract = new NewsTabsPagerAdapter(getChildFragmentManager(), categoryTabLabel);
+        viewPager.setAdapter(pagerContract);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

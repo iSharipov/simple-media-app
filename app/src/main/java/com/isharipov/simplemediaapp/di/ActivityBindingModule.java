@@ -1,9 +1,10 @@
 package com.isharipov.simplemediaapp.di;
 
 import com.isharipov.simplemediaapp.MainActivity;
+import com.isharipov.simplemediaapp.movie.preference.PreferenceMovieActivity;
+import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
 import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryPresenter;
-import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicActivity;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
@@ -36,6 +37,9 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract PreferenceMusicActivity preferenceMusicActivity();
+
+    @ContributesAndroidInjector
+    abstract PreferenceMovieActivity preferenceMovieActivity();
 
     @ContributesAndroidInjector
     abstract NewsFragment newsFragment();
