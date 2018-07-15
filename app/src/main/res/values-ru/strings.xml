@@ -9,6 +9,9 @@
     <string name="pref_music_label">Музыка</string>
     <string name="pref_movie_label">Кино</string>
     <string name="pref_language_label">Язык</string>
+    <string name="trailers">Трейлеры:</string>
+    <string name="reviews">Отзывы:</string>
+    <string name="movie_empty_label">Фильм</string>
 
     <string name="pref_country_label_eg">Египет</string>
     <string name="pref_country_label_fr">Франция</string>

@@ -49,7 +49,7 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
                 for (Long genreId : genreIds) {
                     for (Genre genre : genres) {
                         genre.setLanguage(queryMovieParam.getLanguage());
-                        if (genreId.equals(genre.getGenreId())) {
+                        if (genreId.equals(genre.getId())) {
                             movie.getGenres().add(genre.getName());
                         }
                     }
@@ -93,42 +93,6 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
                 }
             }
         });
-       /* moviesFromApi.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MovieResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        compositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(MovieResponse movieResponse) {
-                        List<Movie> movies = movieResponse.getResults();
-                        view.setData(movies);
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
-//                        for (Article article : articles) {
-//                            article.setCategory(queryCategoryParam.getCategory());
-//                        }
-//                        movieRepository.storeArticlesInDb(articles);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        view.onItemsLoadComplete();
-                        view.hideProgress();
-                        view.setMoreLoaded(false);
-                    }
-                });
-
-    */
     }
 
     @Override

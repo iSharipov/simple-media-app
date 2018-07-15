@@ -10,7 +10,15 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="58dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <View
+        android:id="@+id/shadow_line"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow_line"
+        app:layout_constraintBottom_toTopOf="@+id/navigation" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

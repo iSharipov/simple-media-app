@@ -9,6 +9,9 @@
     <string name="pref_music_label">Music</string>
     <string name="pref_movie_label">Movie</string>
     <string name="pref_language_label">Language</string>
+    <string name="trailers">Trailers:</string>
+    <string name="reviews">Reviews:</string>
+    <string name="movie_empty_label">Movie</string>
 
     <string name="pref_country_label_eg">Egypt</string>
     <string name="pref_country_label_fr">France</string>

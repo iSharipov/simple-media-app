@@ -4,6 +4,8 @@ import com.isharipov.simplemediaapp.movie.model.Genre;
 import com.isharipov.simplemediaapp.movie.model.GenreResponse;
 import com.isharipov.simplemediaapp.movie.model.Movie;
 import com.isharipov.simplemediaapp.movie.model.MovieResponse;
+import com.isharipov.simplemediaapp.movie.model.ReviewResponse;
+import com.isharipov.simplemediaapp.movie.model.TrailerResponse;
 import com.isharipov.simplemediaapp.movie.repository.api.MovieApi;
 import com.isharipov.simplemediaapp.movie.repository.db.MovieDao;
 import com.isharipov.simplemediaapp.movie.util.QueryMovieParam;
@@ -50,6 +52,22 @@ public class MovieRepositoryImpl implements MovieRepository {
         return movieApi.getGenres(
                 language,
                 THEMOVIE_DB_API_KEY);
+    }
+
+    @Override
+    public Observable<ReviewResponse> getReviewsFromApi(String movieId) {
+        return movieApi
+                .getMovieReviews(
+                        movieId,
+                        THEMOVIE_DB_API_KEY);
+    }
+
+    @Override
+    public Observable<TrailerResponse> getTrailersFromApi(String movieId) {
+        return movieApi
+                .getMovieTrailers(
+                        movieId,
+                        THEMOVIE_DB_API_KEY);
     }
 
     @Override

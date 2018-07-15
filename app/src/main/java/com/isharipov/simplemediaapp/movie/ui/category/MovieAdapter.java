@@ -14,6 +14,9 @@ import com.isharipov.simplemediaapp.ui.OnLoadMoreListener;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.bumptech.glide.util.Preconditions.checkNotNull;
 
 /**
@@ -23,28 +26,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
     private final List<Movie> movies;
-    private final MovieViewClickListener clickListener;
+    private final MovieClickListener clickListener;
     private final OnLoadMoreListener onLoadMoreListener;
     private boolean loading;
 
-    public MovieAdapter(List<Movie> movies, MovieViewClickListener clickListener, OnLoadMoreListener onLoadMoreListener) {
+    public MovieAdapter(List<Movie> movies, OnLoadMoreListener onLoadMoreListener, MovieClickListener clickListener) {
         this.movies = movies;
-        this.clickListener = clickListener;
         this.onLoadMoreListener = onLoadMoreListener;
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item_row, parent, false);
-        return new MovieViewHolder(layoutView, clickListener);
+        return new MovieViewHolder(layoutView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         GlideApp.with(holder.itemView)
                 .load(IMAGE_BASE_URL + "w342" + movies.get(position).getPosterPath())
-                .into(holder.getGridItemImage());
+                .into(holder.gridItemImage);
+        holder.itemView.setOnClickListener(v -> clickListener.onClick(movies.get(holder.getAdapterPosition())));
     }
 
     @Override
@@ -53,18 +57,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.grid_item_image)
+        ImageView gridItemImage;
 
-        private final ImageView gridItemImage;
-
-        MovieViewHolder(View itemView, MovieViewClickListener clickListener) {
+        MovieViewHolder(View itemView) {
             super(itemView);
-            gridItemImage = itemView.findViewById(R.id.grid_item_image);
-
-            itemView.setOnClickListener(v -> clickListener.onClick(itemView, getAdapterPosition()));
-        }
-
-        ImageView getGridItemImage() {
-            return gridItemImage;
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -91,11 +89,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public void setLoaded(boolean loading) {
         this.loading = loading;
-    }
-
-    interface MovieViewClickListener {
-
-        void onClick(View view, int position);
     }
 
 }

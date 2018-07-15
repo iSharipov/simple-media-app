@@ -3,8 +3,7 @@ package com.isharipov.simplemediaapp.movie.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-
-import com.google.gson.annotations.SerializedName;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,10 +13,9 @@ import java.util.Objects;
  */
 @Entity(tableName = "genres", indices = @Index(value = {"name", "language"}, unique = true))
 public class Genre implements Serializable {
-    @PrimaryKey(autoGenerate = true)
     private long id;
-    @SerializedName("genreId")
-    private long genreId;
+    @NonNull
+    @PrimaryKey
     private String name;
     private String language;
 
@@ -27,14 +25,6 @@ public class Genre implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(long genreId) {
-        this.genreId = genreId;
     }
 
     public String getName() {
@@ -58,7 +48,7 @@ public class Genre implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return genreId == genre.genreId &&
+        return id == genre.id &&
                 Objects.equals(name, genre.name) &&
                 Objects.equals(language, genre.language);
     }
@@ -66,6 +56,6 @@ public class Genre implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(genreId, name, language);
+        return Objects.hash(id, name, language);
     }
 }

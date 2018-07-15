@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,8 +93,13 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
         }
         movieAdapter = new MovieAdapter(
                 new ArrayList<>(0),
-                null,
-                () -> presenter.loadFromApi(new QueryMovieParam(region, categoryQueryParam[position], ++page, language)));
+                () -> presenter.loadFromApi(new QueryMovieParam(region, categoryQueryParam[position], ++page, language)),
+                (movie) -> {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.container, MovieDetailFragment.newInstance(movie));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                });
     }
 
     @Nullable

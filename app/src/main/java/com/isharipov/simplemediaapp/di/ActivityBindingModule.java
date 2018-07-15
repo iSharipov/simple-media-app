@@ -5,6 +5,9 @@ import com.isharipov.simplemediaapp.movie.preference.PreferenceMovieActivity;
 import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
 import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryPresenter;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieDetailContract;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieDetailFragment;
+import com.isharipov.simplemediaapp.movie.ui.category.MovieDetailPresenter;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicActivity;
 import com.isharipov.simplemediaapp.music.preference.PreferenceMusicFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
@@ -81,4 +84,10 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract MovieCategoryFragment movieCategoryFragment();
+
+    @ContributesAndroidInjector
+    abstract MovieDetailFragment movieDetailFragment();
+
+    @Binds
+    abstract MovieDetailContract.Presenter movieDetailPresenter(MovieDetailPresenter presenter);
 }
