@@ -1,6 +1,20 @@
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+
 android {
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.isharipov.simplemediaapp"
@@ -14,6 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     buildTypes.each {
@@ -28,7 +43,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$versions.ANDROID_SUPPORT"
     implementation "com.android.support:recyclerview-v7:$versions.ANDROID_SUPPORT"
     implementation "com.android.support:cardview-v7:$versions.ANDROID_SUPPORT"
@@ -36,16 +51,13 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$versions.CONSTRAINT_LAYOUT"
     implementation "com.android.support:preference-v7:$versions.ANDROID_SUPPORT"
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
-
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.LEAK_CANARY"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android:$versions.LEAK_CANARY"
-
     implementation("com.github.bumptech.glide:glide:$versions.GLIDE") {
         exclude group: "com.android.support"
     }
     implementation "com.github.bumptech.glide:okhttp3-integration:$versions.GLIDE"
     annotationProcessor "com.github.bumptech.glide:compiler:$versions.GLIDE"
-
     implementation("com.squareup.retrofit2:retrofit:$versions.RETROFIT") {
         exclude module: 'okhttp'
     }
@@ -54,30 +66,23 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$versions.OK_HTTP"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:$versions.OK_HTTP"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.OK_HTTP"
-
     implementation "io.reactivex.rxjava2:rxandroid:$versions.RX_ANDROID"
     implementation "io.reactivex.rxjava2:rxjava:$versions.RX_JAVA"
-
     implementation "com.google.dagger:dagger:$versions.DAGGER"
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.DAGGER"
     implementation "com.google.dagger:dagger-android:$versions.DAGGER"
     implementation "com.google.dagger:dagger-android-support:$versions.DAGGER"
     annotationProcessor "com.google.dagger:dagger-android-processor:$versions.DAGGER"
     compileOnly 'javax.annotation:jsr250-api:1.0'
-
     implementation "com.jakewharton:butterknife:$versions.BUTTERKNIFE"
     annotationProcessor "com.jakewharton:butterknife-compiler:$versions.BUTTERKNIFE"
     implementation "com.jakewharton.timber:timber:$versions.TIMBER"
-
     implementation "com.facebook.stetho:stetho:$versions.STETHO"
     implementation "com.facebook.stetho:stetho-okhttp3:$versions.STETHO"
-
     implementation "android.arch.persistence.room:runtime:$versions.ROOM"
     implementation "android.arch.persistence.room:rxjava2:$versions.ROOM"
     annotationProcessor "android.arch.persistence.room:compiler:$versions.ROOM"
-
     androidTestImplementation "com.android.support:support-annotations:$versions.ANDROID_SUPPORT"
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
