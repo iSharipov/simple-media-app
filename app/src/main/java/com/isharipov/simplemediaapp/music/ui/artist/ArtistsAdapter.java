@@ -50,7 +50,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ViewHold
         Image imageBySize = artist.getImageBySize(EXTRALARGE);
         GlideApp
                 .with(holder.itemView)
-                .load(imageBySize != null ? imageBySize.getText() : R.drawable.ic_action_name)
+                .load(imageBySize != null ? imageBySize.getText() : R.drawable.artist_default)
                 .centerCrop()
                 .into(holder.artistImage);
     }

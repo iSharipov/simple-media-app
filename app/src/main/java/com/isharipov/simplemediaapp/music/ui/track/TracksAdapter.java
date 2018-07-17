@@ -50,7 +50,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.ViewHolder
         Image imageBySize = track.getImageBySize(EXTRALARGE);
         GlideApp
                 .with(holder.itemView)
-                .load(imageBySize != null ? imageBySize.getText() : R.drawable.ic_action_name)
+                .load(imageBySize != null ? imageBySize.getText() : R.drawable.track_default)
                 .centerCrop()
                 .into(holder.trackImage);
     }
