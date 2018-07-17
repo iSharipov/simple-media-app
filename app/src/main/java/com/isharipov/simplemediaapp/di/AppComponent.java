@@ -33,6 +33,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules = {
         AppContextModule.class,
+        GoogleAnalyticsModule.class,
         ActivityBindingModule.class,
         NetworkModule.class,
         RxModule.class,
@@ -67,6 +68,8 @@ public interface AppComponent extends AndroidInjector<MediaApp> {
     MusicRepository musicRepository();
 
     MovieRepository movieRepository();
+
+    Analytics provideAnalytics();
 
     @Component.Builder
     interface Builder {

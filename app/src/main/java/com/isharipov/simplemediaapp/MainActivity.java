@@ -7,13 +7,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
+import com.isharipov.simplemediaapp.di.Analytics;
 import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.music.ui.MusicFragment;
 import com.isharipov.simplemediaapp.news.ui.NewsFragment;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
+
+import static java.util.Collections.singletonMap;
 
 public class MainActivity extends DaggerAppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -21,6 +26,8 @@ public class MainActivity extends DaggerAppCompatActivity implements BottomNavig
     private int navigationId = R.id.navigation_news;
     @BindView(R.id.navigation)
     BottomNavigationView bottomNavigationView;
+    @Inject
+    Analytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +50,13 @@ public class MainActivity extends DaggerAppCompatActivity implements BottomNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (navigationId = item.getItemId()) {
             case R.id.navigation_music:
+                analytics.send(singletonMap(Analytics.CATEGORY_TABBAR_PRESSED, Analytics.ACTION_MUSIC_TABBAR_PRESSED));
                 return openFragment(MusicFragment.newInstance());
             case R.id.navigation_news:
+                analytics.send(singletonMap(Analytics.CATEGORY_TABBAR_PRESSED, Analytics.ACTION_NEWS_TABBAR_PRESSED));
                 return openFragment(NewsFragment.newInstance());
             case R.id.navigation_movies:
+                analytics.send(singletonMap(Analytics.CATEGORY_TABBAR_PRESSED, Analytics.ACTION_MOVIE_TABBAR_PRESSED));
                 return openFragment(MovieFragment.newInstance());
         }
         return false;
