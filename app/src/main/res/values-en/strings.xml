@@ -31,4 +31,11 @@
     <string name="pref_language_label_ar">Arabic</string>
     <string name="pref_language_label_fr">French</string>
     <string name="pref_language_value_it">Italian</string>
+
+    <string name="track_poster_description">Track poster</string>
+    <string name="play_trailer">Play Trailer</string>
+    <string name="movie_poster_description">Movie Poster</string>
+    <string name="like_movie_button_description">Like Movie Button</string>
+    <string name="article_poster_description">Article Poster</string>
+    <string name="article_additional_info_description">Article Additional Info</string>
 </resources>

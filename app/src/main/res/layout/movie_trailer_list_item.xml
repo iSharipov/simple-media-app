@@ -10,7 +10,7 @@
         android:id="@+id/trailer_start_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@null"
+        android:contentDescription="@string/play_trailer"
         android:src="@drawable/ic_play_arrow_black_24dp" />
 
     <TextView

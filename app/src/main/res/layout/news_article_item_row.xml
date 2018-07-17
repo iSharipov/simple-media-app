@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_centerInParent="true"
-                android:contentDescription="@null"
+                android:contentDescription="@string/article_poster_description"
                 android:scaleType="centerCrop" />
 
         </RelativeLayout>
@@ -49,7 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="@null"
+                android:contentDescription="@string/article_additional_info_description"
                 android:focusable="true"
                 android:scaleType="centerCrop" />
 
