@@ -15,9 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
 import com.isharipov.simplemediaapp.R;
+import com.isharipov.simplemediaapp.di.Analytics;
 import com.isharipov.simplemediaapp.movie.preference.PreferenceMovieActivity;
-import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 
 import java.util.Objects;
 
@@ -44,6 +45,8 @@ public class MovieFragment extends DaggerFragment {
     Toolbar toolbar;
     @BindString(R.string.title_movies)
     String titleMovies;
+    @Inject
+    Analytics analytics;
 
     @Inject
     public MovieFragment() {
@@ -131,7 +134,7 @@ public class MovieFragment extends DaggerFragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                analytics.send(new HitBuilders.ScreenViewBuilder().build());
             }
 
             @Override

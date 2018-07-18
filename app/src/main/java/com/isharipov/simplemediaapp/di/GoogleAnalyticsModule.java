@@ -5,8 +5,7 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.isharipov.simplemediaapp.BuildConfig;
-
-import java.util.Map;
+import com.isharipov.simplemediaapp.R;
 
 import javax.inject.Singleton;
 
@@ -24,7 +23,7 @@ public class GoogleAnalyticsModule {
         }
 
         GoogleAnalytics googleAnalytics = GoogleAnalytics.getInstance(app);
-        Tracker tracker = googleAnalytics.newTracker(BuildConfig.ANALYTICS_KEY);
+        Tracker tracker = googleAnalytics.newTracker(R.xml.global_tracker);
         tracker.setSessionTimeout(300);
         return new Analytics.GoogleAnalytics(tracker);
     }
