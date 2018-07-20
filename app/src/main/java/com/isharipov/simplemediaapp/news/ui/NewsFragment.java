@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.isharipov.simplemediaapp.PagerContract;
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
@@ -89,7 +91,16 @@ public class NewsFragment extends DaggerFragment {
         initToolbar((AppCompatActivity) Objects.requireNonNull(getActivity()));
         initTabPagerAdapter();
         initTabLayout();
+        initAdv(root);
         return root;
+    }
+
+    private void initAdv(View root) {
+        AdView mAdView = root.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mAdView.loadAd(adRequest);
     }
 
     @SuppressLint("RestrictedApi")
