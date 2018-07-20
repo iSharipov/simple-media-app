@@ -46,6 +46,8 @@ public class NewsFragment extends DaggerFragment {
     Toolbar toolbar;
     @BindString(R.string.title_news)
     String titleNews;
+    @BindView(R.id.adView)
+    AdView adView;
     PagerContract pagerContract;
 
     public static NewsFragment newInstance() {
@@ -91,16 +93,15 @@ public class NewsFragment extends DaggerFragment {
         initToolbar((AppCompatActivity) Objects.requireNonNull(getActivity()));
         initTabPagerAdapter();
         initTabLayout();
-        initAdv(root);
+        initAdv();
         return root;
     }
 
-    private void initAdv(View root) {
-        AdView mAdView = root.findViewById(R.id.adView);
+    private void initAdv() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
-        mAdView.loadAd(adRequest);
+        adView.loadAd(adRequest);
     }
 
     @SuppressLint("RestrictedApi")
