@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.isharipov.simplemediaapp.di.Analytics;
 import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
@@ -43,7 +44,10 @@ public class MainActivity extends DaggerAppCompatActivity implements BottomNavig
     private void initBottomNavigationView() {
         bottomNavigationView.setSelectedItemId(navigationId);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.findViewById(navigationId).performClick();
+        View navigationViewViewById = bottomNavigationView.findViewById(navigationId);
+        if (navigationViewViewById != null) {
+            bottomNavigationView.findViewById(navigationId).performClick();
+        }
     }
 
     @Override

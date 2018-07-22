@@ -20,12 +20,19 @@ public class MediaApp extends DaggerApplication {
 
     private AppComponent appComponent;
 
+    private static Context context;
+
+    public static Context getContext() {
+        return context;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         initLogger();
         initLeakCanary();
         initStetho();
+        context = getApplicationContext();
     }
 
     private void initLogger() {

@@ -1,14 +1,18 @@
 package com.isharipov.simplemediaapp.movie.ui.category;
 
+import android.content.Context;
+
 import com.isharipov.simplemediaapp.movie.model.Genre;
 import com.isharipov.simplemediaapp.movie.model.GenreResponse;
 import com.isharipov.simplemediaapp.movie.model.Movie;
 import com.isharipov.simplemediaapp.movie.model.MovieResponse;
 import com.isharipov.simplemediaapp.movie.repository.MovieRepository;
 import com.isharipov.simplemediaapp.movie.util.QueryMovieParam;
+import com.isharipov.simplemediaapp.movie.widget.UpcomingMovieUpdateService;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 import com.isharipov.simplemediaapp.news.ui.news.category.CategoryContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,11 +32,13 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
     private CategoryContract.View view;
     private final MovieRepository movieRepository;
     private final CompositeDisposable compositeDisposable;
+    private Context context;
 
     @Inject
-    MovieCategoryPresenter(MovieRepository movieRepository, CompositeDisposable compositeDisposable) {
+    MovieCategoryPresenter(MovieRepository movieRepository, CompositeDisposable compositeDisposable, Context context) {
         this.movieRepository = movieRepository;
         this.compositeDisposable = compositeDisposable;
+        this.context = context;
     }
 
     @Override
@@ -72,6 +78,9 @@ public class MovieCategoryPresenter implements CategoryContract.Presenter {
                     view.setData(movies);
                     view.hideProgress();
                     view.setMoreLoaded(false);
+                    if (queryMovieParam.getCategory().equals("upcoming")){
+                        UpcomingMovieUpdateService.startMovieUpcomingServiceService(context, new ArrayList<>(movies));
+                    }
                 }
             }
 

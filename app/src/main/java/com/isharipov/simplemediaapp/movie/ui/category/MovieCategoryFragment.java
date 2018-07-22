@@ -32,6 +32,7 @@ import butterknife.BindArray;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import dagger.android.support.DaggerFragment;
 
 /**
@@ -67,6 +68,7 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     CategoryContract.Presenter presenter;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+    Unbinder unbinder;
 
     @Inject
     public MovieCategoryFragment() {
@@ -106,7 +108,7 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.movie_fragment_category, container, false);
-        ButterKnife.bind(this, root);
+        unbinder = ButterKnife.bind(this, root);
         setupUI();
         return root;
     }
@@ -155,6 +157,7 @@ public class MovieCategoryFragment extends DaggerFragment implements CategoryCon
     public void onDestroy() {
         super.onDestroy();
         presenter.unsubscribe();
+        unbinder.unbind();
     }
 
     @Override
