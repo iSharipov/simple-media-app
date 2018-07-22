@@ -27,7 +27,16 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,22 +46,20 @@
         </activity>
         <activity
             android:name=".news.preference.PreferenceNewsActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
-        <activity
-            android:name=".music.preference.PreferenceMusicActivity">
+        <activity android:name=".music.preference.PreferenceMusicActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
-        <activity
-            android:name=".movie.preference.PreferenceMovieActivity">
+        <activity android:name=".movie.preference.PreferenceMovieActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
 
         <!-- Google Analytics -->
@@ -81,7 +88,6 @@
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
             android:exported="false" />
-
         <service
             android:name=".movie.widget.UpcomingMovieWidgetRemoteViewsService"
             android:enabled="true"
@@ -89,8 +95,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".movie.widget.UpcomingMovieUpdateService" />
 
-        <receiver
-            android:name=".movie.widget.UpcomingMovieWidgetProvider">
+        <receiver android:name=".movie.widget.UpcomingMovieWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE2" />

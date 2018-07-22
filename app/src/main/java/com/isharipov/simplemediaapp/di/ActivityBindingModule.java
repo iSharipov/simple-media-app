@@ -1,6 +1,5 @@
 package com.isharipov.simplemediaapp.di;
 
-import com.isharipov.simplemediaapp.MainActivity;
 import com.isharipov.simplemediaapp.movie.preference.PreferenceMovieActivity;
 import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
 import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
@@ -22,6 +21,7 @@ import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryPresenter;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingContract;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingPresenter;
+import com.isharipov.simplemediaapp.ui.MainActivity;
 
 import javax.inject.Named;
 

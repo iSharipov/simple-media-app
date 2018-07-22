@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.isharipov.simplemediaapp.PagerContract;
+import com.isharipov.simplemediaapp.ui.PagerContract;
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.news.preference.PreferenceNewsActivity;
 

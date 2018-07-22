@@ -3,7 +3,7 @@ package com.isharipov.simplemediaapp.news.ui;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.isharipov.simplemediaapp.PagerContract;
+import com.isharipov.simplemediaapp.ui.PagerContract;
 import com.isharipov.simplemediaapp.news.ui.news.category.NewsCategoryFragment;
 import com.isharipov.simplemediaapp.news.ui.news.everything.EverythingFragment;
 

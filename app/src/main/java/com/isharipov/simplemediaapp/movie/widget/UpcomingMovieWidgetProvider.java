@@ -8,11 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.isharipov.simplemediaapp.MainActivity;
 import com.isharipov.simplemediaapp.R;
 import com.isharipov.simplemediaapp.movie.model.Movie;
 import com.isharipov.simplemediaapp.movie.ui.MovieFragment;
-import com.isharipov.simplemediaapp.movie.ui.category.MovieCategoryFragment;
 
 import java.util.ArrayList;
 import java.util.List;

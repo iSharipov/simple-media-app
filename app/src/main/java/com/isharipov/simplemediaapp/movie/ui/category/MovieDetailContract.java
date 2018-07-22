@@ -1,6 +1,6 @@
 package com.isharipov.simplemediaapp.movie.ui.category;
 
-import com.isharipov.simplemediaapp.BasePresenter;
+import com.isharipov.simplemediaapp.ui.BasePresenter;
 import com.isharipov.simplemediaapp.movie.model.Review;
 import com.isharipov.simplemediaapp.movie.model.Trailer;
 

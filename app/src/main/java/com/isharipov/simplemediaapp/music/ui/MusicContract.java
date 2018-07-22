@@ -1,6 +1,6 @@
 package com.isharipov.simplemediaapp.music.ui;
 
-import com.isharipov.simplemediaapp.BasePresenter;
+import com.isharipov.simplemediaapp.ui.BasePresenter;
 import com.isharipov.simplemediaapp.news.model.QueryParam;
 
 /**

@@ -1,4 +1,4 @@
-package com.isharipov.simplemediaapp;
+package com.isharipov.simplemediaapp.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

@@ -71,4 +71,7 @@
     <string name="like_movie_button_description">Like Movie Button</string>
     <string name="article_poster_description">Article Poster</string>
     <string name="article_additional_info_description">Article Additional Info</string>
+
+    <string name="splash_tv_msg">App will start in %1$d milli seconds</string>
+
 </resources>

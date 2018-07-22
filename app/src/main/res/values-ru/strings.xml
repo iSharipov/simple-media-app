@@ -38,4 +38,6 @@
     <string name="like_movie_button_description">Отметить фильм</string>
     <string name="article_poster_description">Постер к статье</string>
     <string name="article_additional_info_description">Показать дополнительную информацию</string>
+
+    <string name="splash_tv_msg">Приложение откроется через %1$d миллисекунды</string>
 </resources>
