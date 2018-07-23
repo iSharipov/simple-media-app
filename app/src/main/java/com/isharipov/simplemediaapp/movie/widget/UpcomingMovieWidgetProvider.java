@@ -24,7 +24,7 @@ public class UpcomingMovieWidgetProvider extends AppWidgetProvider {
 
     static List<Movie> moviesUpcomingList = new ArrayList<>();
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+    void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.movie_upcoming_widget);
 
@@ -45,7 +45,7 @@ public class UpcomingMovieWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
     }
 
-    public static void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void updateBakingWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -71,7 +71,7 @@ public class UpcomingMovieWidgetProvider extends AppWidgetProvider {
         if ("android.appwidget.action.APPWIDGET_UPDATE2".equals(action)) {
             moviesUpcomingList = (ArrayList<Movie>) intent.getExtras().getSerializable(FROM_MOVIE_CATEGORY_FRAGMENT);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.movie_upcoming_widget);
-            UpcomingMovieWidgetProvider.updateBakingWidgets(context, appWidgetManager, appWidgetIds);
+            updateBakingWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
         }
     }
